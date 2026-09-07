@@ -123,7 +123,12 @@ p.lede{color:var(--text-dim);font-size:14px;margin:0 0 28px;max-width:640px;line
 .status-btn[data-status="in_progress"]{color:var(--accent);border-color:var(--accent);background:var(--accent-soft);}
 .status-btn[data-status="done"]{color:var(--good);border-color:var(--good);background:var(--good-soft);}
 
-.quiz-row{display:flex;align-items:center;gap:10px;margin-top:10px;}
+.quiz-row{display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap;}
+.course-link{
+  all:unset;cursor:pointer;font-size:12px;font-weight:600;padding:6px 12px;border-radius:20px;
+  border:1px solid var(--border);color:var(--text-dim);
+}
+.course-link:hover{color:var(--text);border-color:var(--text-dim);}
 .quiz-btn{
   all:unset;cursor:pointer;font-size:12px;font-weight:600;padding:6px 12px;border-radius:20px;
   border:1px solid var(--accent);color:var(--accent);
@@ -650,66 +655,66 @@ textarea::placeholder{color:#5c6470;}
   };
 
   var COURSES = [
-    {id:"klaviyo", group:"Core stack", priority:"Done", title:"Klaviyo Practitioner Certificate", provider:"Klaviyo Academy",
+    {id:"klaviyo", group:"Core stack", priority:"Done", title:"Klaviyo Practitioner Certificate", provider:"Klaviyo Academy", url:"https://academy.klaviyo.com/en-us/certificates/klaviyo-practitioner-certificate",
       why:"Named explicitly in multiple current listings (Muscle Mat, Jivaro) as a required skill.",
       learn:"How to build and segment audiences, design automated flows, and read email/SMS performance metrics.", estHours:6, def:"done"},
-    {id:"crm", group:"Core stack", priority:"Med-High", title:"CRM & Marketing Automation Fundamentals", provider:"Salesforce Trailhead (free)",
+    {id:"crm", group:"Core stack", priority:"Med-High", title:"CRM & Marketing Automation Fundamentals", provider:"Salesforce Trailhead (free)", url:"https://trailhead.salesforce.com/content/learn/trails/crm-essentials-lightning-experience",
       why:"Directly named in listings like a Senior CRM Specialist role you're looking at — segmentation, personalisation, and multi-channel journey orchestration on an enterprise CRM platform, a level Klaviyo doesn't fully cover.",
       learn:"Customer data management, campaign/journey building, and segmentation on the platform most enterprise CRM roles are actually built on \u2014 the concepts transfer even when a listing names Adobe or Salesforce Marketing Cloud instead.", estHours:6},
-    {id:"ga4", group:"Core stack", priority:"High", title:"Google Analytics / GA4 Certification", provider:"Google Skillshop",
+    {id:"ga4", group:"Core stack", priority:"High", title:"Google Analytics / GA4 Certification", provider:"Google Skillshop", url:"https://skillshop.withgoogle.com/",
       why:"Expected at coordinator level and above across almost every Sydney listing reviewed.",
       learn:"How to read acquisition and funnel reports, set up conversions, and build audiences from real event data.", estHours:5},
-    {id:"gtm", group:"Core stack", priority:"High", title:"Google Tag Manager Fundamentals", provider:"Google Skillshop (Tag Manager Fundamentals)",
+    {id:"gtm", group:"Core stack", priority:"High", title:"Google Tag Manager Fundamentals", provider:"Google Tag Manager Help", url:"https://support.google.com/tagmanager/answer/6102821",
       why:"Appears in 80+ current Sydney digital marketing/ecommerce listings \u2014 it's the implementation layer between having a site and GA4 actually being able to measure it.",
       learn:"How to deploy tracking tags, triggers, and variables without needing a developer for every change \u2014 given your Liquid/Python background, likely one of the faster wins on this whole list.", estHours:4},
-    {id:"sheets", group:"Core stack", priority:"High", title:"Excel / Google Sheets data analysis", provider:"Coursera (Macquarie Uni) / LinkedIn Learning",
+    {id:"sheets", group:"Core stack", priority:"High", title:"Excel / Google Sheets data analysis", provider:"Coursera (Macquarie Uni) / LinkedIn Learning", url:"https://www.coursera.org/specializations/excel",
       why:"Reporting and pivot-table fluency is a core requirement in nearly every coordinator listing.",
       learn:"Pivot tables, INDEX/MATCH lookups, and how to turn raw exports into a simple reporting dashboard.", estHours:8},
-    {id:"seo", group:"Core stack", priority:"Med-High", title:"SEO Fundamentals", provider:"Semrush Academy / HubSpot Academy",
+    {id:"seo", group:"Core stack", priority:"Med-High", title:"SEO Fundamentals", provider:"Semrush Academy / HubSpot Academy", url:"https://www.semrush.com/academy/courses/seo-fundamentals-course-with-greg-gifford",
       why:"SEO support is a standard responsibility in coordinator job descriptions.",
       learn:"Keyword research, on-page optimisation, and the technical basics — site structure, metadata, how ranking actually works.", estHours:4},
-    {id:"ads", group:"Core stack", priority:"Med", title:"Google Ads Search Certification", provider:"Google Skillshop",
+    {id:"ads", group:"Core stack", priority:"Med", title:"Google Ads Search Certification", provider:"Google Skillshop", url:"https://skillshop.withgoogle.com/googleads/",
       why:"Hands-on paid media capability pushes salary toward the top of the coordinator band.",
       learn:"Campaign structure, keyword match types, bidding strategy, and how to read a search campaign's performance.", estHours:5},
-    {id:"meta", group:"Core stack", priority:"Med", title:"Meta Blueprint (paid social basics)", provider:"Meta Blueprint",
+    {id:"meta", group:"Core stack", priority:"Med", title:"Meta Blueprint (paid social basics)", provider:"Meta Blueprint", url:"https://www.facebookblueprint.com/",
       why:"Several coordinator roles blend Shopify ops with social/paid social campaigns.",
       learn:"Paid social campaign structure, audience targeting and lookalikes, and how to test creative properly.", estHours:4},
-    {id:"cro", group:"Core stack", priority:"Med", title:"CRO Fundamentals", provider:"CXL (paid) or Baymard/Google free primers",
+    {id:"cro", group:"Core stack", priority:"Med", title:"CRO Fundamentals", provider:"CXL (paid) or Baymard/Google free primers", url:"https://cxl.com/institute/",
       why:"Named directly in current listings — 'optimise the onsite customer journey', 'support CRO initiatives'.",
       learn:"How to form a testing hypothesis, run an A/B test properly, read statistical significance, and apply UX heuristics.", estHours:7},
-    {id:"photoshop", group:"Core stack", priority:"Med-Low", title:"Adobe Photoshop basics", provider:"Adobe / LinkedIn Learning",
+    {id:"photoshop", group:"Core stack", priority:"Med-Low", title:"Adobe Photoshop basics", provider:"Adobe / LinkedIn Learning", url:"https://helpx.adobe.com/photoshop/view-all-tutorials.html",
       why:"Shows up repeatedly as a preferred skill for product and web graphics.",
       learn:"Cropping, resizing, and basic touch-ups for product images and web banners — not full design work.", estHours:5},
-    {id:"social", group:"Core stack", priority:"Med-High", title:"Social Media Marketing Fundamentals", provider:"HubSpot Academy (Social Media Marketing Certification)",
+    {id:"social", group:"Core stack", priority:"Med-High", title:"Social Media Marketing Fundamentals", provider:"HubSpot Academy (Social Media Marketing Certification)", url:"https://academy.hubspot.com/courses/social-media",
       why:"A gap you flagged yourself \u2014 and several listings reviewed (OPPO, Vorsen) pair Shopify ops with organic social content, not just paid ads like Meta Blueprint covers.",
       learn:"Building a content strategy, platform-specific posting approaches, social listening, and measuring what's actually working \u2014 the organic side that paid-ads training doesn't touch.", estHours:5},
-    {id:"photography", group:"Core stack", priority:"Med-High", title:"Product & Social Media Photography", provider:"Alison (free, CPD-certified)",
+    {id:"photography", group:"Core stack", priority:"Med-High", title:"Product & Social Media Photography", provider:"Alison (free, CPD-certified)", url:"https://alison.com/course/e-commerce-product-photography-for-social-media",
       why:"Closes the imagery half of the same gap \u2014 this is the capture side (lighting, composition, styling), where the Photoshop course is only the polish side.",
       learn:"Lighting, composition, and styling for product and lifestyle shots that actually convert \u2014 including what a modern phone camera can do without a DSLR.", estHours:4},
 
-    {id:"looker", group:"Stretch", priority:"Low", title:"Looker Studio basics", provider:"Google (free tutorials)",
+    {id:"looker", group:"Stretch", priority:"Low", title:"Looker Studio basics", provider:"Google (free tutorials)", url:"https://support.google.com/looker-studio",
       why:"Senior coordinator/exec roles increasingly expect dashboard-building for leadership reporting.",
       learn:"Connecting data sources and building one shareable dashboard that pulls multi-channel performance together.", estHours:3},
-    {id:"sql", group:"Stretch", priority:"Low", title:"Basic SQL for Marketers", provider:"Codecademy / Coursera",
+    {id:"sql", group:"Stretch", priority:"Low", title:"Basic SQL for Marketers", provider:"Codecademy / Coursera", url:"https://www.codecademy.com/learn/sql-marketing",
       why:"Not a baseline requirement yet, but a differentiator once the core stack is solid.",
       learn:"How to query a database directly — filtering, joining, and aggregating data beyond what a spreadsheet can do.", estHours:7},
 
-    {id:"people", group:"Manager track", priority:"Med", title:"People Management Foundations", provider:"LinkedIn Learning",
+    {id:"people", group:"Manager track", priority:"Med", title:"People Management Foundations", provider:"LinkedIn Learning", url:"https://www.linkedin.com/learning/topics/leadership-and-management",
       why:"Manager listings expect leadership experience — this is the fastest way to close that gap on paper.",
       learn:"How to set expectations, give feedback, delegate, and run a 1:1 — the mechanics of managing people, not tasks.", estHours:4},
-    {id:"commercial", group:"Manager track", priority:"Med", title:"Commercial Acumen / Finance for Non-Financial Managers", provider:"LinkedIn Learning / OpenLearn",
+    {id:"commercial", group:"Manager track", priority:"Med", title:"Commercial Acumen / Finance for Non-Financial Managers", provider:"LinkedIn Learning / OpenLearn", url:"https://www.linkedin.com/learning/topics/finance-and-accounting",
       why:"Manager roles own trade performance and budget decisions, not just channel KPIs.",
       learn:"How to read a P&amp;L, understand margin vs markup, and connect day-to-day site decisions to the bottom line.", estHours:5},
-    {id:"shopifyplus", group:"Manager track", priority:"Med", title:"Shopify Plus fundamentals (Flow, Scripts, B2B)", provider:"Shopify Partner Academy",
+    {id:"shopifyplus", group:"Manager track", priority:"Med", title:"Shopify Plus fundamentals (Flow, Scripts, B2B)", provider:"Shopify Partner Academy", url:"https://academy.shopify.com/",
       why:"Most Ecommerce Manager listings assume Shopify Plus, not standard Shopify.",
       learn:"Shopify Flow for automation, Scripts for checkout customisation, and the B2B/wholesale features standard Shopify lacks.", estHours:5},
-    {id:"aiauto", group:"Manager track", priority:"Med", title:"AI & automation literacy for ecommerce", provider:"Coursera / vendor academies (Shopify Magic, Klaviyo AI)",
+    {id:"aiauto", group:"Manager track", priority:"Med", title:"AI & automation literacy for ecommerce", provider:"Coursera / vendor academies (Shopify Magic, Klaviyo AI)", url:"https://www.coursera.org/learn/google-ai-fundamentals",
       why:"2026 market data shows AI fluency now carries a real salary premium and is increasingly assumed at Manager level.",
       learn:"Where AI genuinely helps — product copy, personalisation, demand forecasting — and where it adds risk instead of saving time.", estHours:5},
-    {id:"retailmedia", group:"Manager track", priority:"Med-Low", title:"Retail media / marketplace ads basics", provider:"Amazon Ads Academy (free)",
+    {id:"retailmedia", group:"Manager track", priority:"Med-Low", title:"Retail media / marketplace ads basics", provider:"Amazon Ads Academy (free)", url:"https://advertising.amazon.com/academy",
       why:"Retail media is one of the fastest-growing skill demands in ecommerce job descriptions, even outside pure marketplace roles.",
       learn:"How sponsored-product and marketplace advertising works — useful even if Procycles never lists on a marketplace.", estHours:4},
-    {id:"agile", group:"Manager track", priority:"Med", title:"Agile / Scrum fundamentals", provider:"LinkedIn Learning / Scrum.org", 
+    {id:"agile", group:"Manager track", priority:"Med", title:"Agile / Scrum fundamentals", provider:"LinkedIn Learning / Scrum.org", url:"https://www.scrum.org/resources", 
       why:"Manager roles coordinate design, dev, and marketing around shared timelines — this is the standard language for that.",
       learn:"How to run a sprint, prioritise a backlog, and keep a cross-functional project moving on a shared timeline.", estHours:4}
   ];
@@ -1324,9 +1329,11 @@ textarea::placeholder{color:#5c6470;}
             '<p class="course-why">' + c.why + '</p>' +
             '<p class="course-learn"><b>You will learn: </b>' + c.learn + '</p>' +
             (hasQuiz ?
-              '<div class="quiz-row"><button class="quiz-btn" data-quiz-id="' + c.id + '">Take quiz</button>' +
+              '<div class="quiz-row">' +
+              (c.url ? '<a class="course-link" href="' + c.url + '" target="_blank" rel="noopener noreferrer">Go to course \u2197</a>' : '') +
+              '<button class="quiz-btn" data-quiz-id="' + c.id + '">Take quiz</button>' +
               '<span class="quiz-score' + (scoreInfo.passed ? ' passed' : '') + '">' + scoreInfo.text + '</span></div>'
-              : '') +
+              : (c.url ? '<div class="quiz-row"><a class="course-link" href="' + c.url + '" target="_blank" rel="noopener noreferrer">Go to course \u2197</a></div>' : '')) +
           '</div>' +
           '<button class="status-btn" data-id="' + c.id + '" data-status="' + status + '">' + label(status) + '</button>' +
         '</div>';
