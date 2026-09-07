@@ -1,0 +1,1913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="color-scheme" content="dark">
+<title>Ecommerce Career Plan</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+:root{
+  color-scheme: dark;
+  --bg:#12151a;
+  --surface:#1b1f26;
+  --surface-2:#20252e;
+  --border:#2b313c;
+  --text:#eceef1;
+  --text-dim:#96a0ac;
+  --accent:#e8a33d;
+  --accent-soft:rgba(232,163,61,0.14);
+  --good:#4fa971;
+  --good-soft:rgba(79,169,113,0.14);
+  --wait:#5b6472;
+  --wait-soft:rgba(91,100,114,0.18);
+  --font-head:'Space Grotesk', 'Segoe UI', sans-serif;
+  --font-body:'Inter', system-ui, sans-serif;
+}
+*{box-sizing:border-box;}
+::selection{background:var(--accent-soft);color:var(--text);}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:var(--font-body);}
+body{min-height:100vh;}
+#app{display:flex;min-height:100vh;max-width:1180px;margin:0 auto;}
+
+/* ---- Sidebar ---- */
+.sidebar{
+  width:220px;flex-shrink:0;padding:28px 16px;border-right:1px solid var(--border);
+  display:flex;flex-direction:column;gap:26px;
+}
+.brand{padding:0 8px;}
+.brand .kicker{font-size:11px;color:var(--text-dim);letter-spacing:0.02em;margin-bottom:4px;}
+.brand h1{font-family:var(--font-head);font-size:19px;font-weight:700;margin:0;line-height:1.25;}
+
+.ring-wrap{display:flex;align-items:center;gap:12px;padding:12px 8px;background:var(--surface);border:1px solid var(--border);border-radius:10px;}
+.ring-wrap svg{transform:rotate(-90deg);}
+.hours-wrap{padding:10px 12px;background:var(--surface);border:1px solid var(--border);border-radius:10px;}
+.hours-wrap .hours-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px;}
+.hours-wrap .hours-num{font-family:var(--font-head);font-size:15px;font-weight:700;}
+.hours-wrap .hours-sub{font-size:11px;color:var(--text-dim);}
+.hours-track{width:100%;height:6px;border-radius:4px;background:#262c36;overflow:hidden;}
+.hours-fill{height:100%;background:var(--accent);border-radius:4px;width:0%;transition:width .3s ease;}
+.ring-label .num{font-family:var(--font-head);font-size:20px;font-weight:700;}
+.ring-label .sub{font-size:11px;color:var(--text-dim);}
+
+nav{display:flex;flex-direction:column;gap:4px;}
+nav button{
+  all:unset;cursor:pointer;padding:10px 12px;border-radius:8px;font-size:14px;color:var(--text-dim);
+  font-weight:500;display:flex;align-items:center;gap:10px;
+}
+nav button .dot{width:6px;height:6px;border-radius:50%;background:var(--wait);flex-shrink:0;}
+nav button.active{background:var(--surface-2);color:var(--text);}
+nav button.active .dot{background:var(--accent);}
+nav button:hover:not(.active){background:var(--surface);}
+
+.sidebar-foot{margin-top:auto;font-size:11px;color:var(--text-dim);padding:0 8px;line-height:1.5;}
+
+/* ---- Main ---- */
+main{flex:1;padding:32px 36px;min-width:0;}
+.panel{display:none;}
+.panel.active{display:block;animation:fade .25s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+
+h2.title{font-family:var(--font-head);font-size:24px;margin:0 0 6px;}
+p.lede{color:var(--text-dim);font-size:14px;margin:0 0 28px;max-width:640px;line-height:1.5;}
+
+/* ---- Roadmap ---- */
+.timeline{display:flex;flex-direction:column;gap:0;}
+.stage{display:flex;gap:20px;position:relative;}
+.stage .marker{display:flex;flex-direction:column;align-items:center;width:28px;flex-shrink:0;}
+.stage .marker .circle{
+  width:28px;height:28px;border-radius:50%;background:var(--surface-2);border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:12px;font-weight:700;
+  color:var(--text-dim);flex-shrink:0;
+}
+.stage.current .marker .circle{border-color:var(--accent);color:var(--accent);background:var(--accent-soft);}
+.stage.goal .marker .circle{border-color:var(--good);color:var(--good);background:var(--good-soft);}
+.stage .marker .line{width:2px;flex:1;background:var(--border);margin-top:4px;}
+.stage:last-child .marker .line{display:none;}
+.stage-body{padding-bottom:32px;flex:1;min-width:0;}
+.stage-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px;}
+.stage-head h3{font-family:var(--font-head);font-size:17px;margin:0;}
+.stage-tag{font-size:11px;padding:2px 8px;border-radius:20px;color:var(--text-dim);border:1px solid var(--border);}
+.stage.current .stage-tag{color:var(--accent);border-color:var(--accent);}
+.stage.goal .stage-tag{color:var(--good);border-color:var(--good);}
+.stage-meta{font-size:13px;color:var(--text-dim);margin-bottom:12px;}
+.stage-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px;}
+.stage-card ul{margin:0;padding-left:18px;font-size:13.5px;line-height:1.7;color:var(--text);}
+.stage-card ul li::marker{color:var(--text-dim);}
+
+.callout{
+  margin-top:8px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);
+  border-radius:8px;padding:16px 18px;
+}
+.callout h4{font-family:var(--font-head);font-size:14px;margin:0 0 10px;}
+.callout ol{margin:0;padding-left:18px;font-size:13.5px;line-height:1.7;}
+
+/* ---- Learning ---- */
+.group-label{font-size:12px;text-transform:none;color:var(--text-dim);margin:26px 0 10px;font-weight:600;}
+.group-label:first-of-type{margin-top:0;}
+.course{
+  display:flex;align-items:flex-start;gap:14px;padding:14px 16px;background:var(--surface);
+  border:1px solid var(--border);border-radius:10px;margin-bottom:8px;
+}
+.course-main{flex:1;min-width:0;}
+.course-title{font-size:14px;font-weight:600;margin:0 0 3px;}
+.course-provider{font-size:12.5px;color:var(--text-dim);margin:0 0 8px;}
+.course-why{font-size:12.5px;color:var(--text-dim);line-height:1.55;margin:0 0 6px;}
+.course-learn{font-size:12.5px;color:var(--text);line-height:1.55;margin:0;}
+.course-learn b{color:var(--accent);font-weight:600;}
+.status-btn{
+  all:unset;cursor:pointer;flex-shrink:0;font-size:12px;font-weight:600;padding:6px 12px;border-radius:20px;
+  border:1px solid var(--border);color:var(--text-dim);white-space:nowrap;
+}
+.status-btn[data-status="in_progress"]{color:var(--accent);border-color:var(--accent);background:var(--accent-soft);}
+.status-btn[data-status="done"]{color:var(--good);border-color:var(--good);background:var(--good-soft);}
+
+.quiz-row{display:flex;align-items:center;gap:10px;margin-top:10px;}
+.quiz-btn{
+  all:unset;cursor:pointer;font-size:12px;font-weight:600;padding:6px 12px;border-radius:20px;
+  border:1px solid var(--accent);color:var(--accent);
+}
+.quiz-btn:hover{background:var(--accent-soft);}
+.quiz-score{font-size:12px;color:var(--text-dim);}
+.quiz-score.passed{color:var(--good);}
+
+.quiz-overlay{
+  display:none;position:fixed;inset:0;background:rgba(8,10,13,0.72);z-index:50;
+  align-items:center;justify-content:center;padding:20px;
+}
+.quiz-overlay.open{display:flex;}
+.quiz-modal{
+  background:var(--surface);border:1px solid var(--border);border-radius:14px;
+  width:100%;max-width:520px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden;
+}
+.quiz-modal-head{
+  display:flex;justify-content:space-between;align-items:center;padding:16px 18px;
+  border-bottom:1px solid var(--border);flex-shrink:0;
+}
+.quiz-modal-head h3{font-family:var(--font-head);font-size:16px;margin:0;}
+.quiz-close{all:unset;cursor:pointer;font-size:20px;color:var(--text-dim);line-height:1;padding:2px 6px;}
+.quiz-close:hover{color:var(--text);}
+.quiz-modal-body{padding:16px 18px;overflow-y:auto;flex:1;}
+.quiz-q{margin-bottom:20px;}
+.quiz-q:last-child{margin-bottom:0;}
+.quiz-q-text{font-size:14px;font-weight:600;margin:0 0 10px;}
+.quiz-opt{
+  all:unset;cursor:pointer;display:block;width:100%;font-size:13.5px;padding:10px 12px;
+  border:1px solid var(--border);border-radius:8px;margin-bottom:7px;color:var(--text);background:var(--surface-2);
+}
+.quiz-opt:hover{border-color:var(--text-dim);}
+.quiz-opt.selected{border-color:var(--accent);background:var(--accent-soft);}
+.quiz-opt.correct{border-color:var(--good);background:var(--good-soft);color:var(--good);}
+.quiz-opt.incorrect{border-color:#d9634b;background:rgba(217,99,75,0.14);color:#e08a78;}
+.quiz-opt[disabled]{cursor:default;}
+.quiz-explain{font-size:12.5px;color:var(--text-dim);margin:8px 0 0;line-height:1.5;display:none;}
+.quiz-explain.show{display:block;}
+.quiz-modal-foot{
+  display:flex;justify-content:space-between;align-items:center;padding:14px 18px;
+  border-top:1px solid var(--border);flex-shrink:0;
+}
+#quizResultText{font-size:13px;font-weight:600;color:var(--text-dim);}
+.quiz-primary-btn{
+  all:unset;cursor:pointer;font-size:13px;font-weight:600;padding:8px 16px;border-radius:8px;
+  background:var(--accent);color:#1a1207;
+}
+.quiz-primary-btn:hover{opacity:0.9;}
+
+.vision-teaser{text-align:center;padding:14px 4px 6px;}
+.vision-teaser p{font-size:14.5px;line-height:1.6;margin:0 0 18px;}
+.vision-revealed .vision-role{font-size:12px;color:var(--text-dim);text-transform:none;margin:0 0 4px;font-weight:600;}
+.vision-revealed .vision-salary{font-family:var(--font-head);font-size:23px;font-weight:700;color:var(--accent);margin:0 0 6px;line-height:1.3;}
+.vision-revealed .vision-salary-sub{display:block;font-family:var(--font-body);font-size:12.5px;font-weight:400;color:var(--text-dim);margin-top:3px;}
+.vision-revealed .vision-step{font-size:13px;color:var(--text-dim);line-height:1.55;margin:0 0 16px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+.vision-revealed .vision-life{font-size:14.5px;line-height:1.65;margin:0 0 16px;}
+.vision-revealed .vision-caveat{font-size:12.5px;color:var(--text-dim);line-height:1.55;margin:0;font-style:italic;}
+
+/* ---- Proof ---- */
+.case{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:16px;}
+.case h3{font-family:var(--font-head);font-size:15px;margin:0 0 4px;}
+.case .case-sub{font-size:12.5px;color:var(--text-dim);margin:0 0 14px;}
+.field-label{font-size:11.5px;color:var(--text-dim);margin-bottom:4px;font-weight:600;}
+.field-block{margin-bottom:12px;}
+.field-block:last-child{margin-bottom:0;}
+textarea{
+  width:100%;min-height:56px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;
+  color:var(--text);font-family:var(--font-body);font-size:13.5px;padding:10px 12px;resize:vertical;line-height:1.5;
+}
+textarea:focus{outline:none;border-color:var(--accent);}
+textarea::placeholder{color:#5c6470;}
+
+.derived-wrap{margin-top:16px;padding-top:16px;border-top:1px solid var(--border);}
+.derived-block{background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:10px;}
+.derived-block:last-child{margin-bottom:0;}
+.derived-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.derived-head span{font-size:11px;color:var(--text-dim);font-weight:600;}
+.derived-text{font-size:13px;line-height:1.55;margin:0;white-space:pre-wrap;}
+.copy-btn{
+  all:unset;cursor:pointer;font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:14px;
+  border:1px solid var(--border);color:var(--text-dim);
+}
+.copy-btn:hover{border-color:var(--accent);color:var(--accent);}
+.copy-btn.copied{border-color:var(--good);color:var(--good);}
+
+/* ---- Job search ---- */
+.jrow{display:flex;gap:18px;padding:13px 0;border-bottom:1px solid var(--border);font-size:13.5px;}
+.jrow:last-child{border-bottom:none;}
+.jrow .jk{width:150px;flex-shrink:0;color:var(--text-dim);font-weight:600;}
+.jrow .jv{flex:1;}
+
+.savehint{font-size:11.5px;color:var(--text-dim);margin-top:6px;}
+.reset-row{margin-top:28px;}
+.reset-row button{
+  all:unset;cursor:pointer;font-size:12px;color:var(--text-dim);border:1px solid var(--border);padding:7px 14px;
+  border-radius:8px;
+}
+.reset-row button:hover{color:var(--text);border-color:var(--text-dim);}
+
+/* ---- Today tab ---- */
+.target-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px;margin-bottom:16px;}
+.target-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;}
+.target-label{font-size:11.5px;color:var(--text-dim);margin:0 0 4px;font-weight:600;}
+.target-countdown{font-family:var(--font-head);font-size:20px;font-weight:700;color:var(--accent);margin:0;}
+.target-pace{font-size:12.5px;color:var(--text-dim);margin:10px 0 0;line-height:1.5;}
+#targetDateInput{
+  background:var(--surface-2);border:1px solid var(--border);border-radius:8px;color:var(--text);
+  font-family:var(--font-body);font-size:13px;padding:7px 10px;color-scheme:dark;
+}
+
+.backup-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px;margin-top:20px;}
+.backup-label{font-size:12.5px;color:var(--text-dim);margin:0 0 6px;font-weight:600;}
+.backup-note{font-size:12.5px;color:var(--text-dim);line-height:1.5;margin:0 0 12px;}
+.backup-card textarea{min-height:60px;margin:10px 0;}
+.backup-card .quiz-primary-btn{margin-top:2px;}
+.streak-row{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;}
+.streak-card{
+  flex:1;min-width:130px;background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  padding:16px 18px;
+}
+.streak-card .streak-num{font-family:var(--font-head);font-size:28px;font-weight:700;color:var(--accent);}
+.streak-card .streak-label{font-size:12px;color:var(--text-dim);margin-top:2px;}
+
+.heatmap-wrap{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px;margin-bottom:20px;}
+.heatmap-title{font-size:12.5px;color:var(--text-dim);margin:0 0 12px;font-weight:600;}
+.heatmap-grid{display:grid;grid-template-columns:repeat(14, 1fr);gap:5px;}
+.heatmap-cell{aspect-ratio:1;border-radius:3px;background:#262c36;}
+.heatmap-cell.active{background:var(--accent);}
+.heatmap-cell.today{outline:1.5px solid var(--text);}
+
+.tip-box{
+  background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:8px;
+  padding:16px 18px;margin-bottom:20px;
+}
+.tip-box .tip-kicker{font-size:11px;color:var(--accent);font-weight:600;margin:0 0 6px;}
+.tip-box p{font-size:14px;margin:0;line-height:1.55;}
+
+.next-action{
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px;
+  display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;
+}
+.next-action .na-label{font-size:11.5px;color:var(--text-dim);margin:0 0 4px;font-weight:600;}
+.next-action .na-title{font-size:14.5px;font-weight:600;margin:0;}
+.next-action .na-meta{font-size:12.5px;color:var(--text-dim);margin:3px 0 0;}
+.next-action button{
+  all:unset;cursor:pointer;font-size:13px;font-weight:600;padding:8px 16px;border-radius:8px;
+  background:var(--accent);color:#1a1207;flex-shrink:0;
+}
+
+/* ---- Applications tracker ---- */
+.app-summary{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px;font-size:12.5px;color:var(--text-dim);}
+.app-summary b{color:var(--text);font-family:var(--font-head);}
+.app-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px;margin-bottom:12px;position:relative;}
+.app-card .app-del{position:absolute;top:10px;right:12px;all:unset;cursor:pointer;color:var(--text-dim);font-size:18px;line-height:1;padding:2px 6px;}
+.app-card .app-del:hover{color:#e08a78;}
+.app-row{display:flex;gap:10px;margin-bottom:9px;flex-wrap:wrap;}
+.app-row:last-of-type{margin-bottom:0;}
+.app-field{flex:1;min-width:130px;}
+.app-field label{display:block;font-size:11px;color:var(--text-dim);margin-bottom:3px;font-weight:600;}
+.app-field input, .app-field select, .app-field textarea{
+  width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:7px;color:var(--text);
+  font-family:var(--font-body);font-size:13px;padding:8px 10px;color-scheme:dark;
+}
+.app-field textarea{min-height:44px;resize:vertical;}
+.status-select{font-weight:600;}
+.status-select[data-status="Applied"]{color:var(--text);}
+.status-select[data-status="Interviewing"]{color:var(--accent);}
+.status-select[data-status="Offer"]{color:var(--good);}
+.status-select[data-status="Rejected"]{color:#e08a78;}
+.status-select[data-status="Withdrawn"]{color:var(--text-dim);}
+
+/* ---- Milestones tab ---- */
+.milestone-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:14px;}
+.milestone-card h3{font-family:var(--font-head);font-size:16px;margin:0 0 6px;}
+.milestone-card .m-blurb{font-size:13px;color:var(--text-dim);line-height:1.55;margin:0 0 14px;}
+.milestone-card .m-foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+.milestone-card .m-score{font-size:13px;color:var(--text-dim);}
+.milestone-card .m-score.taken{color:var(--good);}
+.milestone-card button{
+  all:unset;cursor:pointer;font-size:13px;font-weight:600;padding:8px 16px;border-radius:8px;
+  border:1px solid var(--accent);color:var(--accent);
+}
+.milestone-card button:hover{background:var(--accent-soft);}
+.growth-strip{display:flex;gap:8px;align-items:center;font-size:12.5px;color:var(--text-dim);margin-top:14px;flex-wrap:wrap;}
+.growth-strip b{color:var(--text);}
+
+/* ---- Mobile ---- */
+@media (max-width: 760px){
+  #app{flex-direction:column;}
+  .sidebar{width:100%;flex-direction:row;align-items:center;flex-wrap:wrap;padding:16px;border-right:none;border-bottom:1px solid var(--border);gap:14px;}
+  .brand{width:100%;}
+  .ring-wrap{padding:8px 10px;}
+  nav{flex-direction:row;flex-wrap:wrap;}
+  .sidebar-foot{display:none;}
+  main{padding:22px 18px;}
+  .jrow{flex-direction:column;gap:2px;}
+  .jrow .jk{width:auto;}
+  .heatmap-grid{grid-template-columns:repeat(7, 1fr);}
+}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="sidebar">
+    <div class="brand">
+      <div class="kicker">Ecommerce career plan</div>
+      <h1>Coordinator &rarr; Manager</h1>
+    </div>
+
+    <div class="ring-wrap">
+      <svg width="46" height="46" viewBox="0 0 46 46">
+        <circle cx="23" cy="23" r="19" fill="none" stroke="#262c36" stroke-width="5"/>
+        <circle id="ringProgress" cx="23" cy="23" r="19" fill="none" stroke="#e8a33d" stroke-width="5" stroke-linecap="round" stroke-dasharray="119" stroke-dashoffset="119"/>
+      </svg>
+      <div class="ring-label">
+        <div class="num" id="ringNum">0%</div>
+        <div class="sub">Learning done</div>
+      </div>
+    </div>
+
+    <div class="hours-wrap">
+      <div class="hours-top">
+        <span class="hours-num" id="hoursNum">0 / 0 hrs</span>
+        <span class="hours-sub">Hours done</span>
+      </div>
+      <div class="hours-track"><div class="hours-fill" id="hoursFill"></div></div>
+    </div>
+
+    <nav>
+      <button class="tab-btn active" data-tab="today"><span class="dot"></span>Today</button>
+      <button class="tab-btn" data-tab="roadmap"><span class="dot"></span>Roadmap</button>
+      <button class="tab-btn" data-tab="learning"><span class="dot"></span>Learning</button>
+      <button class="tab-btn" data-tab="milestones"><span class="dot"></span>Milestones</button>
+      <button class="tab-btn" data-tab="proof"><span class="dot"></span>Proof</button>
+      <button class="tab-btn" data-tab="jobsearch"><span class="dot"></span>Job search</button>
+    </nav>
+
+    <div class="sidebar-foot">Progress and case-study notes save automatically on this device.</div>
+  </div>
+
+  <main>
+
+    <!-- TODAY -->
+    <section class="panel active" id="panel-today">
+      <h2 class="title">Today</h2>
+      <p class="lede">Not a to-do list. Just what's true right now and one thing worth doing today.</p>
+
+      <div class="target-card">
+        <div class="target-top">
+          <div>
+            <p class="target-label">Target: Manager-ready by</p>
+            <p class="target-countdown" id="targetCountdown">&nbsp;</p>
+          </div>
+          <input type="date" id="targetDateInput">
+        </div>
+        <p class="target-pace" id="targetPace">&nbsp;</p>
+      </div>
+
+      <div class="streak-row">
+        <div class="streak-card"><div class="streak-num" id="streakCurrent">0</div><div class="streak-label">Day streak</div></div>
+        <div class="streak-card"><div class="streak-num" id="streakBest">0</div><div class="streak-label">Best streak</div></div>
+        <div class="streak-card"><div class="streak-num" id="streakTotal">0</div><div class="streak-label">Total days active</div></div>
+      </div>
+
+      <div class="heatmap-wrap">
+        <p class="heatmap-title">Last 28 days</p>
+        <div class="heatmap-grid" id="heatmapGrid"></div>
+      </div>
+
+      <div class="tip-box">
+        <p class="tip-kicker">Today's line</p>
+        <p id="dailyTip"></p>
+      </div>
+
+      <div class="next-action" id="nextActionBox">
+        <div>
+          <p class="na-label">Next best move</p>
+          <p class="na-title" id="naTitle">&nbsp;</p>
+          <p class="na-meta" id="naMeta">&nbsp;</p>
+        </div>
+        <button id="naBtn">Go to Learning</button>
+      </div>
+
+      <div class="backup-card">
+        <p class="backup-label">Backup &amp; restore</p>
+        <p class="backup-note">If progress ever stops saving automatically, copy a backup before you close this and paste it back in next time you open it.</p>
+        <button class="copy-btn" id="backupCopyBtn">Copy backup</button>
+        <textarea id="backupPasteArea" placeholder="Paste a backup here to restore it"></textarea>
+        <button class="quiz-primary-btn" id="backupRestoreBtn">Restore from backup</button>
+      </div>
+    </section>
+
+    <!-- ROADMAP -->
+    <section class="panel" id="panel-roadmap">
+      <h2 class="title">Your path to Ecommerce Manager</h2>
+      <p class="lede">Three stages, sourced from current Sydney ecommerce job listings and salary data. Coordinator is the immediate next step; Manager is where it's heading.</p>
+
+      <div class="timeline">
+
+        <div class="stage current">
+          <div class="marker"><div class="circle">1</div><div class="line"></div></div>
+          <div class="stage-body">
+            <div class="stage-head"><h3>Now — Shopify Developer, Procycles</h3><span class="stage-tag">Current</span></div>
+            <div class="stage-meta">Since July 2024</div>
+            <div class="stage-card">
+              <ul>
+                <li>Deep hands-on Shopify: custom Liquid, Matrixify, YMM fitment, multi-supplier inventory</li>
+                <li>Real delivered projects: parts catalogue scale-up, Klaviyo owner email sequence, first aid kit launch</li>
+                <li>Klaviyo Practitioner Certificate completed</li>
+                <li>Actively applying for titled Coordinator/Specialist roles (DBG Health &amp; Beauty in progress)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="stage">
+          <div class="marker"><div class="circle">2</div><div class="line"></div></div>
+          <div class="stage-body">
+            <div class="stage-head"><h3>Next — Ecommerce Coordinator / Specialist</h3><span class="stage-tag">Immediate target</span></div>
+            <div class="stage-meta">Sydney mid-level ecommerce roles typically sit around $70,000&ndash;$95,000</div>
+            <div class="stage-card">
+              <ul>
+                <li>Get a titled ecommerce role outside Procycles — this is the credential most listings filter on</li>
+                <li>Finish the Learning tab: GA4, Excel/Sheets, SEO, Google Ads, CRO</li>
+                <li>Have 2&ndash;3 case studies ready (see Proof tab) — this is what separates you from other candidates with the same certs</li>
+                <li>Start owning something end-to-end: a channel, a campaign, a launch — full responsibility, not just execution</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="stage goal">
+          <div class="marker"><div class="circle">3</div></div>
+          <div class="stage-body">
+            <div class="stage-head"><h3>Goal — Ecommerce Manager</h3><span class="stage-tag">Where this is heading</span></div>
+            <div class="stage-meta">Sydney median sits around $100,000&ndash;$128,000, roughly $79,000&ndash;$145,000 depending on scope</div>
+            <div class="stage-card">
+              <ul>
+                <li>3&ndash;5 years' ecommerce experience is the typical bar in current listings</li>
+                <li>Demonstrated team or people leadership — even informal leadership counts if you can describe it concretely</li>
+                <li>Ownership of trade performance/revenue targets, with reporting delivered to senior stakeholders</li>
+                <li>Shopify Plus exposure (Flow, Scripts, B2B) — most Manager listings assume Plus, not standard Shopify</li>
+                <li>Comfort with budget or commercial decisions, not just channel-level KPIs</li>
+                <li>AI/automation fluency is now a genuine salary premium in 2026 listings, and retail media (Amazon Ads and similar) is one of the fastest-growing skill asks even outside pure marketplace roles</li>
+                <li>The core stack from Stage 2 (GA4, SEO, UX, online sales, digital marketing) is assumed, not a differentiator anymore</li>
+              </ul>
+            </div>
+
+            <div class="callout">
+              <h4>How to build leadership evidence before you have the title</h4>
+              <ol>
+                <li>Take one project end-to-end and own the decisions — the parts finder rollout is a strong example. Document what you decided, why, and what changed as a result.</li>
+                <li>Manage a relationship, not just a task — a freelancer, an agency, or a supplier. Being the person who directs someone else's work is leadership, regardless of title.</li>
+                <li>Ask to be the one presenting results — even a five-minute update to your manager on how a campaign or launch performed builds the "reports to senior stakeholders" evidence Manager roles ask for.</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- LEARNING -->
+    <section class="panel" id="panel-learning">
+      <h2 class="title">Courses &amp; certifications</h2>
+      <p class="lede">Pulled from real Sydney ecommerce listings, plus three 2026 additions (AI/automation literacy, retail media, Agile) that current Manager-level job descriptions increasingly expect. Each one now shows what you'll actually learn, not just why it's asked for. Tap a status pill to cycle it — your progress saves automatically.</p>
+
+      <div id="courseList"></div>
+
+      <div class="reset-row"><button id="resetBtn">Reset all progress</button></div>
+    </section>
+
+    <!-- MILESTONES -->
+    <section class="panel" id="panel-milestones">
+      <h2 class="title">Milestone quizzes</h2>
+      <p class="lede">Three bigger checkpoints — take Baseline before you start, Midpoint once the core stack is underway, and Final once you're calling yourself Manager-ready.</p>
+      <div id="milestoneList"></div>
+    </section>
+
+    <!-- PROOF -->
+    <section class="panel" id="panel-proof">
+      <h2 class="title">Case studies</h2>
+      <p class="lede">Courses prove you can do the work. These prove you have. Fill in real numbers where you have them — even rough ones are worth having ready.</p>
+
+      <div class="case" data-case="a">
+        <h3>Parts catalogue &amp; Parts Finder scale-up</h3>
+        <p class="case-sub">Tag-based YMM architecture, the Parts Finder widget, competitor price scraping</p>
+        <div class="field-block"><div class="field-label">Situation</div><textarea data-field="situation" placeholder="Scaling the parts catalogue to 30,000+ products — what problem this solved"></textarea></div>
+        <div class="field-block"><div class="field-label">What you built</div><textarea data-field="action" placeholder="YMM tagging, Parts Finder widget (My Garage, mobile bottom sheet, Fits Your Bike badge), competitor scraper"></textarea></div>
+        <div class="field-block"><div class="field-label">Outcome</div><textarea data-field="outcome" placeholder="Time saved, catalogue growth, conversion or search impact — whatever you can measure"></textarea></div>
+        <div class="derived-wrap">
+          <div class="derived-block">
+            <div class="derived-head"><span>Resume bullet</span><button class="copy-btn" data-copy-target="bullet">Copy</button></div>
+            <p class="derived-text" data-derived="bullet"></p>
+          </div>
+          <div class="derived-block">
+            <div class="derived-head"><span>Interview answer</span><button class="copy-btn" data-copy-target="star">Copy</button></div>
+            <p class="derived-text" data-derived="star"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="case" data-case="b">
+        <h3>New-bike-owner Klaviyo email sequence</h3>
+        <p class="case-sub">Tag-based discount automation plus model-specific accessory recommendations</p>
+        <div class="field-block"><div class="field-label">Situation</div><textarea data-field="situation" placeholder="Bikes sell in-store with no Shopify order — the data gap this had to work around"></textarea></div>
+        <div class="field-block"><div class="field-label">What you built</div><textarea data-field="action" placeholder="Tag-based 12-month discount, model-specific accessory emails, Shopify Flow for tag expiry"></textarea></div>
+        <div class="field-block"><div class="field-label">Outcome</div><textarea data-field="outcome" placeholder="Redemption rate, accessory attach rate, or repeat-purchase lift once live"></textarea></div>
+        <div class="derived-wrap">
+          <div class="derived-block">
+            <div class="derived-head"><span>Resume bullet</span><button class="copy-btn" data-copy-target="bullet">Copy</button></div>
+            <p class="derived-text" data-derived="bullet"></p>
+          </div>
+          <div class="derived-block">
+            <div class="derived-head"><span>Interview answer</span><button class="copy-btn" data-copy-target="star">Copy</button></div>
+            <p class="derived-text" data-derived="star"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="case" data-case="c">
+        <h3>Survival first aid kit range launch</h3>
+        <p class="case-sub">Collection build plus launch marketing plan</p>
+        <div class="field-block"><div class="field-label">Situation</div><textarea data-field="situation" placeholder="A new range Procycles wanted to make a big deal of on the site"></textarea></div>
+        <div class="field-block"><div class="field-label">What you built</div><textarea data-field="action" placeholder="Collection/page build, social and email plan around launch"></textarea></div>
+        <div class="field-block"><div class="field-label">Outcome</div><textarea data-field="outcome" placeholder="Units sold, launch-week traffic, email engagement — good as a quick third case study"></textarea></div>
+        <div class="derived-wrap">
+          <div class="derived-block">
+            <div class="derived-head"><span>Resume bullet</span><button class="copy-btn" data-copy-target="bullet">Copy</button></div>
+            <p class="derived-text" data-derived="bullet"></p>
+          </div>
+          <div class="derived-block">
+            <div class="derived-head"><span>Interview answer</span><button class="copy-btn" data-copy-target="star">Copy</button></div>
+            <p class="derived-text" data-derived="star"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="savehint" id="saveHint">&nbsp;</div>
+    </section>
+
+    <!-- JOB SEARCH -->
+    <section class="panel" id="panel-jobsearch">
+      <h2 class="title">Job search</h2>
+      <p class="lede">Track applications as they actually happen — this list is yours to keep updating.</p>
+
+      <div class="app-summary" id="appSummary"></div>
+      <div id="appList"></div>
+      <div class="reset-row"><button id="addAppBtn">+ Add application</button></div>
+
+      <p class="group-label" style="margin-top:30px;">Standing strategy notes</p>
+      <div class="jrow"><div class="jk">Resume angle</div><div class="jv">"Operator" language — running and maintaining the site, not "grew/scaled" leadership framing.</div></div>
+      <div class="jrow"><div class="jk">Level targeted now</div><div class="jv">Coordinator/Specialist — the immediate next step, with Manager as the goal after that.</div></div>
+      <div class="jrow"><div class="jk">Salary target</div><div class="jv">$80,000&ndash;$90,000 for this next role.</div></div>
+      <div class="jrow"><div class="jk">Reference handling</div><div class="jv">Keeping the search discreet rather than asking your current manager.</div></div>
+    </section>
+
+  </main>
+</div>
+
+<div class="quiz-overlay" id="quizOverlay">
+  <div class="quiz-modal">
+    <div class="quiz-modal-head">
+      <h3 id="quizModalTitle">Quiz</h3>
+      <button class="quiz-close" id="quizCloseBtn">&times;</button>
+    </div>
+    <div class="quiz-modal-body" id="quizModalBody"></div>
+    <div class="quiz-modal-foot">
+      <span id="quizResultText">&nbsp;</span>
+      <div>
+        <button class="quiz-primary-btn" id="quizCheckBtn">Check answers</button>
+        <button class="quiz-primary-btn" id="quizRetakeBtn" style="display:none;">Retake</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="quiz-overlay" id="visionOverlay">
+  <div class="quiz-modal vision-modal">
+    <div class="quiz-modal-head">
+      <h3>What this is actually for</h3>
+      <button class="quiz-close" id="visionCloseBtn">&times;</button>
+    </div>
+    <div class="quiz-modal-body">
+      <div id="visionTeaser" class="vision-teaser">
+        <p>You've seen the courses and the checklists. Here's what's actually on the other side of it.</p>
+        <button class="quiz-primary-btn" id="visionRevealBtn">Reveal</button>
+      </div>
+      <div id="visionRevealed" class="vision-revealed" style="display:none;">
+        <p class="vision-role">Ecommerce Manager, Sydney</p>
+        <p class="vision-salary">$100,000&ndash;$128,000 typical<span class="vision-salary-sub"> &middot; up to $145,000+ depending on scope</span></p>
+        <p class="vision-step">Coordinator/Specialist &mdash; your immediate next step &mdash; typically sits $70,000&ndash;$95,000. This is the rung after that one.</p>
+        <p class="vision-life">That gap is the difference between watching every fortnight and actually having room to move &mdash; rent, travel, a car, or just breathing room in your account. It's the kind of income that turns the big decisions &mdash; buying a place, whatever you're building toward &mdash; into something you're planning on your terms, not waiting to afford.</p>
+        <p class="vision-caveat">Worth being straight with yourself about this: it's not a guarantee. It's what's realistically on the table if you actually execute the plan &mdash; the case studies and the real ownership, not just the certificates.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var STORAGE_KEY = "career_plan_state_v1";
+
+  // Works inside Claude (window.storage) and as a standalone page hosted anywhere else (localStorage).
+  var HAS_ARTIFACT_STORAGE = (typeof window.storage !== "undefined" && window.storage && typeof window.storage.set === "function");
+
+  var storageBackend = {
+    async get(key){
+      if(HAS_ARTIFACT_STORAGE){
+        return await window.storage.get(key, false);
+      }
+      var v = localStorage.getItem(key);
+      return v ? { value: v } : null;
+    },
+    async set(key, value){
+      if(HAS_ARTIFACT_STORAGE){
+        return await window.storage.set(key, value, false);
+      }
+      localStorage.setItem(key, value);
+      return { key: key, value: value };
+    }
+  };
+
+  var COURSES = [
+    {id:"klaviyo", group:"Core stack", priority:"Done", title:"Klaviyo Practitioner Certificate", provider:"Klaviyo Academy",
+      why:"Named explicitly in multiple current listings (Muscle Mat, Jivaro) as a required skill.",
+      learn:"How to build and segment audiences, design automated flows, and read email/SMS performance metrics.", estHours:6, def:"done"},
+    {id:"crm", group:"Core stack", priority:"Med-High", title:"CRM &amp; Marketing Automation Fundamentals", provider:"Salesforce Trailhead (free)",
+      why:"Directly named in listings like a Senior CRM Specialist role you're looking at — segmentation, personalisation, and multi-channel journey orchestration on an enterprise CRM platform, a level Klaviyo doesn't fully cover.",
+      learn:"Customer data management, campaign/journey building, and segmentation on the platform most enterprise CRM roles are actually built on \u2014 the concepts transfer even when a listing names Adobe or Salesforce Marketing Cloud instead.", estHours:6},
+    {id:"ga4", group:"Core stack", priority:"High", title:"Google Analytics / GA4 Certification", provider:"Google Skillshop",
+      why:"Expected at coordinator level and above across almost every Sydney listing reviewed.",
+      learn:"How to read acquisition and funnel reports, set up conversions, and build audiences from real event data.", estHours:5},
+    {id:"gtm", group:"Core stack", priority:"High", title:"Google Tag Manager Fundamentals", provider:"Google Skillshop (Tag Manager Fundamentals)",
+      why:"Appears in 80+ current Sydney digital marketing/ecommerce listings \u2014 it's the implementation layer between having a site and GA4 actually being able to measure it.",
+      learn:"How to deploy tracking tags, triggers, and variables without needing a developer for every change \u2014 given your Liquid/Python background, likely one of the faster wins on this whole list.", estHours:4},
+    {id:"sheets", group:"Core stack", priority:"High", title:"Excel / Google Sheets data analysis", provider:"Coursera (Macquarie Uni) / LinkedIn Learning",
+      why:"Reporting and pivot-table fluency is a core requirement in nearly every coordinator listing.",
+      learn:"Pivot tables, INDEX/MATCH lookups, and how to turn raw exports into a simple reporting dashboard.", estHours:8},
+    {id:"seo", group:"Core stack", priority:"Med-High", title:"SEO Fundamentals", provider:"Semrush Academy / HubSpot Academy",
+      why:"SEO support is a standard responsibility in coordinator job descriptions.",
+      learn:"Keyword research, on-page optimisation, and the technical basics — site structure, metadata, how ranking actually works.", estHours:4},
+    {id:"ads", group:"Core stack", priority:"Med", title:"Google Ads Search Certification", provider:"Google Skillshop",
+      why:"Hands-on paid media capability pushes salary toward the top of the coordinator band.",
+      learn:"Campaign structure, keyword match types, bidding strategy, and how to read a search campaign's performance.", estHours:5},
+    {id:"meta", group:"Core stack", priority:"Med", title:"Meta Blueprint (paid social basics)", provider:"Meta Blueprint",
+      why:"Several coordinator roles blend Shopify ops with social/paid social campaigns.",
+      learn:"Paid social campaign structure, audience targeting and lookalikes, and how to test creative properly.", estHours:4},
+    {id:"cro", group:"Core stack", priority:"Med", title:"CRO Fundamentals", provider:"CXL (paid) or Baymard/Google free primers",
+      why:"Named directly in current listings — 'optimise the onsite customer journey', 'support CRO initiatives'.",
+      learn:"How to form a testing hypothesis, run an A/B test properly, read statistical significance, and apply UX heuristics.", estHours:7},
+    {id:"photoshop", group:"Core stack", priority:"Med-Low", title:"Adobe Photoshop basics", provider:"Adobe / LinkedIn Learning",
+      why:"Shows up repeatedly as a preferred skill for product and web graphics.",
+      learn:"Cropping, resizing, and basic touch-ups for product images and web banners — not full design work.", estHours:5},
+    {id:"social", group:"Core stack", priority:"Med-High", title:"Social Media Marketing Fundamentals", provider:"HubSpot Academy (Social Media Marketing Certification)",
+      why:"A gap you flagged yourself \u2014 and several listings reviewed (OPPO, Vorsen) pair Shopify ops with organic social content, not just paid ads like Meta Blueprint covers.",
+      learn:"Building a content strategy, platform-specific posting approaches, social listening, and measuring what's actually working \u2014 the organic side that paid-ads training doesn't touch.", estHours:5},
+    {id:"photography", group:"Core stack", priority:"Med-High", title:"Product &amp; Social Media Photography", provider:"Alison (free, CPD-certified)",
+      why:"Closes the imagery half of the same gap \u2014 this is the capture side (lighting, composition, styling), where the Photoshop course is only the polish side.",
+      learn:"Lighting, composition, and styling for product and lifestyle shots that actually convert \u2014 including what a modern phone camera can do without a DSLR.", estHours:4},
+
+    {id:"looker", group:"Stretch", priority:"Low", title:"Looker Studio basics", provider:"Google (free tutorials)",
+      why:"Senior coordinator/exec roles increasingly expect dashboard-building for leadership reporting.",
+      learn:"Connecting data sources and building one shareable dashboard that pulls multi-channel performance together.", estHours:3},
+    {id:"sql", group:"Stretch", priority:"Low", title:"Basic SQL for Marketers", provider:"Codecademy / Coursera",
+      why:"Not a baseline requirement yet, but a differentiator once the core stack is solid.",
+      learn:"How to query a database directly — filtering, joining, and aggregating data beyond what a spreadsheet can do.", estHours:7},
+
+    {id:"people", group:"Manager track", priority:"Med", title:"People Management Foundations", provider:"LinkedIn Learning",
+      why:"Manager listings expect leadership experience — this is the fastest way to close that gap on paper.",
+      learn:"How to set expectations, give feedback, delegate, and run a 1:1 — the mechanics of managing people, not tasks.", estHours:4},
+    {id:"commercial", group:"Manager track", priority:"Med", title:"Commercial Acumen / Finance for Non-Financial Managers", provider:"LinkedIn Learning / OpenLearn",
+      why:"Manager roles own trade performance and budget decisions, not just channel KPIs.",
+      learn:"How to read a P&amp;L, understand margin vs markup, and connect day-to-day site decisions to the bottom line.", estHours:5},
+    {id:"shopifyplus", group:"Manager track", priority:"Med", title:"Shopify Plus fundamentals (Flow, Scripts, B2B)", provider:"Shopify Partner Academy",
+      why:"Most Ecommerce Manager listings assume Shopify Plus, not standard Shopify.",
+      learn:"Shopify Flow for automation, Scripts for checkout customisation, and the B2B/wholesale features standard Shopify lacks.", estHours:5},
+    {id:"aiauto", group:"Manager track", priority:"Med", title:"AI &amp; automation literacy for ecommerce", provider:"Coursera / vendor academies (Shopify Magic, Klaviyo AI)",
+      why:"2026 market data shows AI fluency now carries a real salary premium and is increasingly assumed at Manager level.",
+      learn:"Where AI genuinely helps — product copy, personalisation, demand forecasting — and where it adds risk instead of saving time.", estHours:5},
+    {id:"retailmedia", group:"Manager track", priority:"Med-Low", title:"Retail media / marketplace ads basics", provider:"Amazon Ads Academy (free)",
+      why:"Retail media is one of the fastest-growing skill demands in ecommerce job descriptions, even outside pure marketplace roles.",
+      learn:"How sponsored-product and marketplace advertising works — useful even if Procycles never lists on a marketplace.", estHours:4},
+    {id:"agile", group:"Manager track", priority:"Med", title:"Agile / Scrum fundamentals", provider:"LinkedIn Learning / Scrum.org", 
+      why:"Manager roles coordinate design, dev, and marketing around shared timelines — this is the standard language for that.",
+      learn:"How to run a sprint, prioritise a backlog, and keep a cross-functional project moving on a shared timeline.", estHours:4}
+  ];
+
+  var QUIZZES = {
+    klaviyo: [
+      {q:"What's the best way to send different content to new vs returning customers in the same email?",
+       opts:["Send one identical email to everyone","Use segmentation or conditional/dynamic blocks to tailor content","Only use SMS","Manually build a separate campaign for every single customer"], correct:1,
+       explain:"Segmentation and conditional/dynamic content let one email or flow branch what different people actually see."},
+      {q:"What is a Klaviyo \"flow\", in the context of a new-customer welcome sequence?",
+       opts:["A one-off manual email blast","An automated series of emails/SMS triggered by an event like signup or purchase","A static customer list","A discount code"], correct:1,
+       explain:"Flows are automations that trigger off an event and run without you sending each message manually."},
+      {q:"If you want to know whether an email actually drove sales, what should you check first?",
+       opts:["Open rate only","Placed order / revenue attributed to that campaign or flow","Unsubscribe count","Send time"], correct:1,
+       explain:"Attributed revenue ties the send directly to purchases — opens are a proxy at best."},
+      {q:"What's the risk of sending every campaign to your entire list every time?",
+       opts:["None, more sends is always better","Fatigue and unsubscribes, since not everyone is a fit for every message","It's the only way Klaviyo works","It automatically improves deliverability"], correct:1,
+       explain:"Untargeted blasts increase unsubscribes and can hurt sender reputation over time."},
+      {q:"What does \"sender reputation\" affect?",
+       opts:["Only how emails look","Whether your emails land in the inbox or get filtered as spam","The price of Klaviyo","Nothing measurable"], correct:1,
+       explain:"Poor sender reputation — high complaints, low engagement — can route emails straight to spam regardless of content."}
+    ],
+    crm: [
+      {q:"What's the core idea behind a \"customer journey\" in CRM/marketing automation?",
+       opts:["A single one-off email","The sequence of touchpoints and communications a customer experiences over time with a brand","A physical delivery route","A discount code"], correct:1,
+       explain:"A journey maps the ongoing sequence of interactions a customer has with a brand, not a single message."},
+      {q:"What's the purpose of segmentation within a CRM platform?",
+       opts:["Grouping customers by shared traits or behaviour so messaging can be tailored to each group","Deleting inactive contacts","Setting up billing","Choosing a font for emails"], correct:0,
+       explain:"Segmentation is the foundation that makes personalised, relevant messaging possible at scale."},
+      {q:"What does \"marketing automation\" actually automate?",
+       opts:["Manual data entry only","Sending the right message to the right person at the right time, triggered by rules or behaviour, without manual sending","Product manufacturing","Legal compliance"], correct:1,
+       explain:"Automation replaces manually-sent one-off messages with rule- or trigger-based sequences."},
+      {q:"Why do enterprise CRM roles often list \"data literacy\" as a requirement?",
+       opts:["It's irrelevant to CRM work","Effective segmentation, personalisation, and testing all depend on being able to read and act on customer data","Only the data team needs this skill","CRM platforms don't use data"], correct:1,
+       explain:"Every CRM decision — who gets what message, and when — is ultimately a data-driven call."},
+      {q:"A listing asks for a specific enterprise platform you haven't used (e.g. Adobe Campaign). What's the most honest way to position skills from a different platform?",
+       opts:["Claim direct experience with the platform anyway","Speak to the underlying concepts \u2014 segmentation, journeys, personalisation \u2014 you've demonstrated elsewhere, since the mechanics transfer","Avoid mentioning any CRM experience at all","Say platforms don't matter"], correct:1,
+       explain:"The core CRM skill set transfers across platforms even when the specific software named doesn't match exactly."}
+    ],
+    ga4: [
+      {q:"Which GA4 report would you check to see where new visitors are coming from?",
+       opts:["Acquisition","Retention","Monetization","Tech overview"], correct:0,
+       explain:"Acquisition reports break traffic down by source/medium/channel."},
+      {q:"In GA4, what is an \"event\"?",
+       opts:["A calendar meeting","Any tracked user interaction — a page view, click, or add-to-cart","A type of audience","A billing line item"], correct:1,
+       explain:"GA4 is built entirely around events — everything from page_view to purchase is one."},
+      {q:"What does a \"conversion\" represent in GA4?",
+       opts:["Any page view","A specific action you've marked as valuable, like a purchase or signup","A bounce","Session duration"], correct:1,
+       explain:"Conversions are events you've explicitly flagged as meaningful business outcomes."},
+      {q:"What's the difference between a \"session\" and a \"user\" in GA4?",
+       opts:["They're identical","A user is a person; a session is one visit/period of activity by that person","A session is always 24 hours long","A user can only ever have one session"], correct:1,
+       explain:"One user can generate many sessions over time — sessions group activity within a visit."},
+      {q:"A landing page has a low engagement rate. What does that suggest?",
+       opts:["The page is performing extremely well","Visitors are leaving quickly without meaningfully interacting — worth investigating","GA4 is broken","Engagement rate isn't a real metric"], correct:1,
+       explain:"Low engagement rate flags visitors who aren't sticking around — check page relevance or load speed."}
+    ],
+    gtm: [
+      {q:"What is Google Tag Manager primarily used for?",
+       opts:["Writing ad copy","Deploying and managing tracking tags/scripts on a website without editing site code directly","Hosting a website","Designing email templates"], correct:1,
+       explain:"GTM lets you add and manage tracking scripts through a container, instead of hard-coding them into the site."},
+      {q:"What's a \"trigger\" in Google Tag Manager?",
+       opts:["The tag's visual design","The condition that determines when a tag should fire, e.g. a page view or button click","A type of discount code","A GA4 report"], correct:1,
+       explain:"Triggers define when a tag fires — a page load, a click, a form submit, and so on."},
+      {q:"What's a \"variable\" used for in GTM?",
+       opts:["Storing dynamic values, like a product price or page URL, that tags and triggers can reference","Changing the website's colour scheme","Setting ad budgets","Managing email lists"], correct:0,
+       explain:"Variables capture dynamic data that GTM can pass into tags and triggers."},
+      {q:"Why is GTM usually set up as a companion to GA4 rather than a replacement for it?",
+       opts:["GTM replaces GA4 entirely","GTM handles deploying and firing the tracking tags, while GA4 is where the resulting data gets reported and analysed","They do the same thing","GTM is only for paid ads"], correct:1,
+       explain:"GTM is the delivery mechanism; GA4 is the reporting destination — they work together, not as alternatives."},
+      {q:"What's a practical benefit of GTM for a small ecommerce team without a dedicated developer?",
+       opts:["It eliminates the need for any analytics","Marketing/ecommerce staff can add or adjust tracking themselves without needing a developer for every change","It automatically writes product descriptions","It replaces the need for a website"], correct:1,
+       explain:"This is exactly why GTM exists — putting tag management in the hands of marketing/ops, not just developers."}
+    ],
+    sheets: [
+      {q:"What's a pivot table best used for?",
+       opts:["Changing cell colours","Summarising and cross-tabulating a large data set quickly","Sending emails","Password-protecting a file"], correct:1,
+       explain:"Pivot tables let you regroup and summarise raw rows without rebuilding formulas each time."},
+      {q:"What does INDEX/MATCH (or VLOOKUP) let you do?",
+       opts:["Auto-delete duplicate rows","Look up a value in one place and pull related data from another","Create a chart","Sort text alphabetically only"], correct:1,
+       explain:"These are lookup functions — they connect two data sets by a shared key."},
+      {q:"Your sales data has one row per order. What's the first step to build a \"sales by month\" summary?",
+       opts:["Manually retype every row","Group/summarise the data by month, e.g. with a pivot table","Delete all but one row","Convert the file to PDF"], correct:1,
+       explain:"Grouping/summarising is exactly what pivot tables (or SUMIFS) are for."},
+      {q:"What's a practical use of conditional formatting in a reporting sheet?",
+       opts:["Automatically highlighting values above/below a threshold so issues stand out","Encrypting the file","Deleting blank rows","Converting currency"], correct:0,
+       explain:"Conditional formatting turns a wall of numbers into something scannable at a glance."},
+      {q:"Why use a named/structured table instead of a plain data range?",
+       opts:["It looks the same either way","Formulas and filters stay reliable as rows are added or removed","It's required for pivot tables to exist","It changes the file format"], correct:1,
+       explain:"Structured tables auto-expand and keep references intact, which raw ranges don't handle well."}
+    ],
+    seo: [
+      {q:"What does \"on-page SEO\" mainly refer to?",
+       opts:["Backlinks from other sites","Elements you control on your own page — titles, headers, content, metadata","Server location","Social media likes"], correct:1,
+       explain:"On-page is anything you directly control on the page, as opposed to off-page factors like backlinks."},
+      {q:"Why do meta titles and descriptions matter?",
+       opts:["They control page load speed","They influence click-through from search results and give search engines context","They're required for GA4 to work","They set the page's colour scheme"], correct:1,
+       explain:"They're what a searcher actually sees in results — a strong one earns the click."},
+      {q:"What's a basic sign a page has technical SEO issues?",
+       opts:["Slow load times or broken links","Too many products","Being built on Shopify","Having a favicon"], correct:0,
+       explain:"Speed and broken links directly hurt both rankings and user experience."},
+      {q:"What's a \"backlink\" in SEO terms?",
+       opts:["A link from another website pointing to yours","A broken link on your own site","A type of image tag","An internal navigation menu"], correct:0,
+       explain:"Backlinks are a major off-page ranking signal — other sites vouching for yours via a link."},
+      {q:"Why does site speed matter for SEO, not just user experience?",
+       opts:["It doesn't affect rankings at all","Search engines factor page experience/speed into ranking, on top of it affecting conversion","It only matters for mobile","It only affects image quality"], correct:1,
+       explain:"Search engines explicitly weigh page experience signals like speed as part of ranking."}
+    ],
+    ads: [
+      {q:"What does \"match type\" control in a Google Ads search campaign?",
+       opts:["The ad's colour","How closely a search query must match your keyword to trigger your ad","The currency used","The website's theme"], correct:1,
+       explain:"Match types (broad, phrase, exact) control how loosely or tightly a search has to match to trigger your ad."},
+      {q:"What's the main purpose of a bidding strategy?",
+       opts:["Deciding what your ad says","Controlling how much you pay and what outcome you're optimising for","Picking your logo","Managing inventory"], correct:1,
+       explain:"Bidding strategy is about spend and optimisation goal — clicks, conversions, value, etc."},
+      {q:"A campaign gets clicks but no sales. What should you check first?",
+       opts:["The font used in the ad","Landing page relevance and conversion tracking setup","The company's ABN","Staff headcount"], correct:1,
+       explain:"If clicks aren't converting, the landing page or the tracking itself is the usual culprit."},
+      {q:"What does Quality Score influence in Google Ads?",
+       opts:["Nothing measurable","Your ad rank and cost-per-click — higher quality can mean paying less for the same position","Only your account colour scheme","The currency you're billed in"], correct:1,
+       explain:"A higher Quality Score (relevance, expected CTR, landing page experience) typically lowers effective cost."},
+      {q:"What's a negative keyword used for?",
+       opts:["Excluding irrelevant search terms so your ad doesn't show for them","Making your ad appear more often","Increasing your budget automatically","Blocking competitors' ads"], correct:0,
+       explain:"Negative keywords filter out searches you don't want to pay for, reducing wasted spend."}
+    ],
+    meta: [
+      {q:"What's a \"lookalike audience\" in Meta Ads?",
+       opts:["A random sample of all users","An audience modelled to resemble your existing customers","A list of competitors","A blocked audience"], correct:1,
+       explain:"Lookalikes use your existing customer data to find similar new people."},
+      {q:"Why test multiple ad creatives at once?",
+       opts:["To use up budget faster","To find out which message/image actually performs best with your audience","Because Meta requires it","To confuse competitors"], correct:1,
+       explain:"Creative testing is how you find what actually resonates instead of guessing."},
+      {q:"What does \"audience targeting\" control?",
+       opts:["Who sees your ad, based on interests, demographics, or behaviour","The price of your product","Your website hosting","Your email subject line"], correct:0,
+       explain:"Targeting is entirely about who the ad is shown to."},
+      {q:"What's \"ad fatigue\"?",
+       opts:["When an ad becomes very effective over time","When an audience sees the same ad too often and performance drops","A billing error","A targeting setting"], correct:1,
+       explain:"Repeated exposure to the same creative reduces engagement — a sign to refresh it."},
+      {q:"What's the purpose of the Meta Pixel (or Conversions API)?",
+       opts:["To change ad colours","To track what happens after someone clicks an ad, like purchases, for measurement and retargeting","To design the ad itself","To manage billing only"], correct:1,
+       explain:"The Pixel/CAPI feeds real conversion events back so Meta can measure and optimise toward them."}
+    ],
+    cro: [
+      {q:"What is a hypothesis in a CRO test?",
+       opts:["A guess with no basis","A specific, testable prediction of what change will improve a metric, and why","The final report","A type of discount"], correct:1,
+       explain:"A good hypothesis names the change, the metric, and the reasoning — that's what makes it testable."},
+      {q:"What does \"statistical significance\" tell you in an A/B test?",
+       opts:["Which variant looks nicer","Whether the difference in results is likely real and not just random chance","How much the test cost","How long the test ran"], correct:1,
+       explain:"Significance is about confidence that the result isn't just noise."},
+      {q:"Which of these is a common CRO improvement area?",
+       opts:["Reducing friction in checkout","Increasing shipping costs","Hiding the search bar","Removing product images"], correct:0,
+       explain:"Checkout friction is one of the highest-leverage places to test and improve."},
+      {q:"Why should you only change one major variable at a time in a simple A/B test?",
+       opts:["So you can tell what actually caused the result","To make the test take longer","It's a legal requirement","It doesn't matter, change everything at once"], correct:0,
+       explain:"Changing multiple things at once makes it impossible to know which change drove the outcome."},
+      {q:"What's a common reason a CRO test gives a misleading result?",
+       opts:["Ending the test too early, before enough data/time has passed","Running it correctly to full sample size","Having too much traffic","Testing on too many pages"], correct:0,
+       explain:"Stopping early on a promising-looking result is one of the most common ways tests mislead people."}
+    ],
+    photoshop: [
+      {q:"What's the main use of cropping/resizing tools for ecommerce images?",
+       opts:["Changing product specs","Making images fit consistently across listings and banners","Editing HTML","Managing inventory"], correct:1,
+       explain:"Consistent sizing keeps a storefront looking professional across every listing."},
+      {q:"Why touch up a product photo before uploading it?",
+       opts:["To mislead customers","To clean up background, lighting, or clarity so the product looks accurate and appealing","To remove the price","To change the actual product"], correct:1,
+       explain:"Good editing improves presentation without misrepresenting the product."},
+      {q:"What file consideration matters most for web images?",
+       opts:["File size/compression for fast page load","The camera brand used","Print resolution (DPI) only","File name length"], correct:0,
+       explain:"Large uncompressed images slow the site down — web images need to balance quality and size."},
+      {q:"What's the benefit of using layers when editing a product image?",
+       opts:["None, flattening immediately is best","You can adjust or undo individual elements without redoing the whole image","It makes the file smaller","It's required to save as JPG"], correct:1,
+       explain:"Layers keep edits non-destructive and separable — far more flexible than editing a flat image."},
+      {q:"What image format is generally best for a photo-heavy product image on the web?",
+       opts:["A compressed JPG or modern format like WebP","An uncompressed BMP","A .docx file","A .csv file"], correct:0,
+       explain:"JPG/WebP balance quality and file size well for photographic content on the web."}
+    ],
+    social: [
+      {q:"What's the main difference between a social media strategy and just posting content ad hoc?",
+       opts:["There's no real difference","A strategy sets clear goals, target platforms, and content themes before posting, rather than posting reactively","A strategy just means posting more often","A strategy only applies to paid ads"], correct:1,
+       explain:"A strategy defines goals and direction up front; ad hoc posting has neither."},
+      {q:"What's \"social listening\" used for?",
+       opts:["Monitoring conversations and mentions about your brand or industry to gather insight","Turning off comments","Scheduling posts automatically","Buying followers"], correct:0,
+       explain:"Social listening tracks what's being said to inform strategy and catch issues early."},
+      {q:"Why does posting cadence/consistency matter on social platforms?",
+       opts:["It doesn't matter at all","Most platform algorithms favour accounts that post regularly and sustain engagement over time","Consistency only matters for paid ads","Posting daily guarantees virality"], correct:1,
+       explain:"Consistency helps algorithmic reach and keeps an audience engaged — though it's never a guarantee of virality."},
+      {q:"What's a practical way to measure whether social content is actually working?",
+       opts:["Follower count alone","Engagement and conversion metrics tied to actual business goals, not just follower count","How many hours were spent creating it","Whether you personally like the post"], correct:1,
+       explain:"Vanity metrics like follower count don't tell you whether content is driving real outcomes."},
+      {q:"Why might different content work on Instagram versus TikTok versus Facebook?",
+       opts:["They're identical — content should be reused unchanged","Each platform has different audience expectations, formats, and algorithm behaviour","Only Instagram matters for ecommerce","Platform doesn't affect content performance"], correct:1,
+       explain:"Platform-native formatting and audience behaviour differ significantly — a one-size approach usually underperforms."}
+    ],
+    photography: [
+      {q:"What's the single biggest factor in a good product photo, according to most photography fundamentals?",
+       opts:["The camera's megapixel count","Lighting — how the subject is lit matters more than the gear used to shoot it","The photo's file size","The number of props included"], correct:1,
+       explain:"Lighting is consistently the biggest determinant of photo quality, more than camera specs."},
+      {q:"What's a \"flatlay\" in product photography?",
+       opts:["A photo taken from directly above, arranging items on a flat surface","A blurry-background technique","A type of camera lens","A video format"], correct:0,
+       explain:"Flatlays are a popular top-down composition style, especially common for social and ecommerce imagery."},
+      {q:"Why do many ecommerce brands shoot on a plain white or neutral background for listing photos?",
+       opts:["It's required by law","It keeps focus on the product and matches common marketplace/platform requirements","It's cheaper film","It makes photos load faster"], correct:1,
+       explain:"Clean, consistent backgrounds keep attention on the product and often match platform photo guidelines."},
+      {q:"What does \"composition\" refer to in photography?",
+       opts:["The camera's settings menu","How elements are arranged within the frame to guide the viewer's eye","The file format used","The photo's colour temperature only"], correct:1,
+       explain:"Composition is about framing and arrangement — rule of thirds, leading lines, and so on."},
+      {q:"Why might a smartphone be enough for solid ecommerce/social product photos in 2026?",
+       opts:["Smartphones can't produce usable photos","Modern smartphone cameras, combined with good lighting and composition, can produce professional-looking results without a DSLR","Only DSLRs are accepted on any platform","Smartphone photos can't be edited"], correct:1,
+       explain:"With the right light and framing, modern phone cameras are genuinely competitive for product/social content."}
+    ],
+    looker: [
+      {q:"What's the main benefit of a Looker Studio dashboard over separate spreadsheets?",
+       opts:["It just looks fancier","It pulls multiple data sources into one live, shareable view","It replaces the need for any data","Google requires it"], correct:1,
+       explain:"The value is consolidation — one place, multiple sources, always current."},
+      {q:"What do you connect first when building a report?",
+       opts:["A data source, e.g. GA4 or Sheets","A font","A domain name","An ad account budget"], correct:0,
+       explain:"Everything in Looker Studio starts from a connected data source."},
+      {q:"Why is a live-connected dashboard useful for reporting to a manager?",
+       opts:["It updates automatically instead of needing a fresh export each time","It's the only way to see data at all","It replaces GA4 entirely","It hides negative results"], correct:0,
+       explain:"Live connections mean the reader always sees current numbers, not a stale snapshot."},
+      {q:"What's a \"blended data source\" used for?",
+       opts:["Combining metrics from more than one data source into a single chart or table","Deleting old reports","Changing the report's font","Encrypting the dashboard"], correct:0,
+       explain:"Blending lets you compare or combine data across sources, like ad spend and GA4 sessions, in one view."},
+      {q:"Why set up filters/date-range controls rather than a fixed view?",
+       opts:["It doesn't change anything","It lets whoever's viewing it explore different periods or segments without you rebuilding the report","It's required by Google","It removes the need for data sources"], correct:1,
+       explain:"Interactive controls make one dashboard useful for many questions instead of one fixed snapshot."}
+    ],
+    sql: [
+      {q:"What does a basic SQL \"SELECT\" statement do?",
+       opts:["Deletes a table","Retrieves specific data from a database","Changes a font","Sends an email"], correct:1,
+       explain:"SELECT is how you pull data out — the most basic and common SQL operation."},
+      {q:"What's a \"JOIN\" used for?",
+       opts:["Combining data from two related tables","Deleting duplicate rows","Formatting currency","Backing up a database"], correct:0,
+       explain:"JOINs connect tables that share a common key, like customer ID."},
+      {q:"Why would a marketer bother learning basic SQL?",
+       opts:["To bypass analytics tools entirely","To pull and filter data directly when a spreadsheet or dashboard tool can't do it","To design a website","To write ad copy"], correct:1,
+       explain:"SQL is the fallback when the data you need isn't already packaged into a report."},
+      {q:"What does \"WHERE\" do in a SQL query?",
+       opts:["Filters rows based on a condition","Deletes a column","Renames a table","Formats currency"], correct:0,
+       explain:"WHERE narrows results down to rows matching a condition, like a filter in a spreadsheet."},
+      {q:"What does \"GROUP BY\" typically pair with?",
+       opts:["An aggregate function like COUNT, SUM, or AVG, to summarise rows by category","Nothing, it works alone","Deleting duplicate tables","Formatting dates only"], correct:0,
+       explain:"GROUP BY buckets rows by a value, and you'd usually aggregate within each bucket."}
+    ],
+    people: [
+      {q:"What's a core purpose of a regular 1:1 with a direct report?",
+       opts:["Assigning more work, nothing else","A two-way check-in on progress, blockers, and development","Reviewing payroll","Announcing organisational changes"], correct:1,
+       explain:"1:1s are for the person, not just task assignment — that's what makes them worth having."},
+      {q:"What's an example of effective delegation?",
+       opts:["Giving a task with no context and checking in only at the deadline","Giving clear context and expectations, then trusting the person to execute","Doing the task yourself anyway","Assigning tasks at random"], correct:1,
+       explain:"Delegation without context sets people up to fail — clarity and trust both matter."},
+      {q:"What's a trait of constructive feedback?",
+       opts:["Vague and given long after the event","Specific, timely, and focused on behaviour rather than character","Delivered only in front of others","Focused on blame"], correct:1,
+       explain:"Specific and timely feedback is actionable; vague or delayed feedback rarely changes anything."},
+      {q:"What's a common early mistake for a new manager?",
+       opts:["Continuing to do the team's hands-on work yourself instead of enabling others","Delegating clearly with context","Holding regular 1:1s","Giving specific feedback"], correct:0,
+       explain:"New managers often keep doing the IC work themselves rather than shifting to enabling the team."},
+      {q:"What does \"psychological safety\" in a team mean?",
+       opts:["Physical safety equipment only","People feel safe to speak up, disagree, or admit mistakes without fear of punishment","A legal compliance document","A type of insurance"], correct:1,
+       explain:"Teams with psychological safety surface problems and ideas earlier instead of hiding them."}
+    ],
+    commercial: [
+      {q:"What's the difference between margin and markup?",
+       opts:["They're the same thing","Margin is profit as a % of selling price; markup is profit as a % of cost","Margin only applies to services","Markup is illegal in retail"], correct:1,
+       explain:"Same dollar profit, two different percentages depending on what you divide by."},
+      {q:"A product costs $50 and sells for $80. What's the gross margin, roughly?",
+       opts:["37.5%","60%","160%","0%"], correct:0,
+       explain:"($80 − $50) / $80 = 37.5% margin. 60% is the markup on cost, not the margin."},
+      {q:"Why would an Ecommerce Manager care about a P&amp;L?",
+       opts:["It's not their responsibility","It shows whether the channel's activity is actually profitable, not just generating revenue","It only matters to accountants","It replaces GA4"], correct:1,
+       explain:"Revenue without margin context can hide a channel that's actually losing money."},
+      {q:"A channel drives high revenue but very low margin. What should a manager consider?",
+       opts:["Automatically shutting it down","Whether the volume is still worth it and whether costs/pricing can be improved, not just chasing revenue","Ignoring margin entirely","Doubling spend with no other analysis"], correct:1,
+       explain:"Revenue alone doesn't tell the full story — margin and cost context matter before deciding what to do."},
+      {q:"What's \"customer acquisition cost\" (CAC) roughly measuring?",
+       opts:["How much it costs, on average, to acquire one new customer through marketing/sales spend","The retail price of a product","Shipping cost per order","Staff wages only"], correct:0,
+       explain:"CAC is spend divided by number of new customers acquired — a core unit economics metric."}
+    ],
+    shopifyplus: [
+      {q:"What is Shopify Flow used for?",
+       opts:["Designing the storefront theme","Automating backend workflows and business logic, like tagging customers or triggering actions","Writing ad copy","Processing payments"], correct:1,
+       explain:"Flow is Shopify Plus's automation builder for backend logic."},
+      {q:"What can Shopify Scripts customise (on Plus)?",
+       opts:["Checkout behaviour, like discounts or shipping rules based on cart conditions","Email templates","Google Ads bidding","DNS settings"], correct:0,
+       explain:"Scripts let Plus stores apply custom logic at checkout that standard Shopify can't."},
+      {q:"What's a key feature Shopify Plus adds for B2B/wholesale?",
+       opts:["Nothing different from standard Shopify","Dedicated B2B storefronts, custom pricing, and company accounts","Only affects app store access","Removes the need for a domain"], correct:1,
+       explain:"Plus has purpose-built B2B functionality that standard Shopify plans don't include."},
+      {q:"What's a benefit of Shopify Plus's higher API/checkout limits for a growing store?",
+       opts:["None, all plans are identical","It supports higher traffic and more complex customisation without hitting standard-plan limits","It removes the need for a theme","It only affects blog posts"], correct:1,
+       explain:"Plus is built for scale — higher rate limits and more checkout customisation than standard plans."},
+      {q:"What's a typical reason a growing store moves to Shopify Plus?",
+       opts:["It's cheaper than every other plan","It needs automation (Flow), checkout customisation (Scripts), or B2B features standard plans don't offer","It's required to use Google Analytics","It's the only plan with a mobile app"], correct:1,
+       explain:"Plus is usually adopted for its extra automation, customisation, and B2B capability, not price."}
+    ],
+    aiauto: [
+      {q:"Where is AI most useful in ecommerce right now?",
+       opts:["Replacing all human decision-making","Assisting with tasks like product copy drafts, personalisation, and demand forecasting","Only in customer service chatbots","It has no practical use yet"], correct:1,
+       explain:"It's an assistive tool for specific tasks, not a replacement for judgement."},
+      {q:"What's a real risk of over-relying on AI-generated content?",
+       opts:["None, it's always accurate","Inaccurate or generic output that still needs human review","It's too slow to be useful","It can't be used in ecommerce at all"], correct:1,
+       explain:"AI output needs a human check — accuracy and tone can both drift without review."},
+      {q:"What's a sensible first use of AI automation for a small ecommerce team?",
+       opts:["Fully automating customer communication with no oversight","Using it to speed up repetitive drafting, then reviewing before publishing","Ignoring it entirely","Using it to set final prices with no review"], correct:1,
+       explain:"Speed-up-then-review is the practical middle ground most teams start with."},
+      {q:"What's a reasonable way to fact-check AI-generated product content before publishing?",
+       opts:["Publish immediately, AI is always correct","Have a human review it against the actual product specs before it goes live","Never use AI for anything","Only check spelling"], correct:1,
+       explain:"AI can produce plausible-sounding but wrong details — a human spec-check catches that first."},
+      {q:"What's one way AI can help with demand forecasting?",
+       opts:["It replaces the need for any historical sales data","It can spot patterns in past sales/seasonality faster than manual analysis, to inform stock decisions","It guarantees future sales","It only works for advertising"], correct:1,
+       explain:"AI-assisted forecasting is about pattern detection to support decisions, not a guarantee of the future."}
+    ],
+    retailmedia: [
+      {q:"What is \"retail media\" advertising?",
+       opts:["Traditional TV ads for retail brands","Ads placed within a retailer's own platform, like sponsored product listings, targeting shoppers with purchase intent","Billboard advertising","Print catalogues"], correct:1,
+       explain:"Retail media specifically means ads inside the shopping platform itself, not external channels."},
+      {q:"Why is retail media considered high-intent advertising?",
+       opts:["It targets people already browsing or searching in a shopping context","It only targets people who've never shopped before","It's shown on unrelated websites","It doesn't use targeting at all"], correct:0,
+       explain:"You're reaching people who are already in buying mode, not cold audiences."},
+      {q:"Even without listing on a marketplace, why might this still be worth understanding?",
+       opts:["It's irrelevant if you're not on a marketplace","The same principles — sponsored placement, purchase-intent targeting — increasingly apply to on-site search too","It only applies to groceries","It replaces SEO entirely"], correct:1,
+       explain:"On-site sponsored placements and search ads borrow the same logic as marketplace retail media."},
+      {q:"What's a \"sponsored product\" placement?",
+       opts:["A free organic listing","A paid placement that appears within search results or product listings, marked as sponsored","An email newsletter ad","A billboard"], correct:1,
+       explain:"Sponsored products are paid placements within the shopping experience, distinct from organic results."},
+      {q:"Why might a brand's own website benefit from retail-media-style thinking, even without a marketplace presence?",
+       opts:["It wouldn't — it's marketplace-only","Applying the same purchase-intent targeting to on-site search/promoted listings can lift conversion on your own store","It only applies to groceries","It replaces the need for a website"], correct:1,
+       explain:"The same high-intent-placement logic can be applied on-site, not just on external marketplaces."}
+    ],
+    agile: [
+      {q:"What is a \"sprint\" in Agile/Scrum?",
+       opts:["A once-a-year planning meeting","A fixed, short time period where a set amount of work gets completed","A type of ad campaign","A customer complaint process"], correct:1,
+       explain:"Sprints are short, fixed cycles — usually 1-2 weeks — used to structure and pace work."},
+      {q:"What does \"backlog prioritisation\" mean?",
+       opts:["Deleting all old tasks","Deciding the order tasks should be tackled in, based on value and urgency","Assigning tasks alphabetically","Ignoring stakeholder input"], correct:1,
+       explain:"Prioritisation is about sequencing work by what matters most, not doing everything at once."},
+      {q:"Why is Agile language useful when leading a cross-functional project?",
+       opts:["It's only relevant for software developers","It gives a shared framework and vocabulary for planning and tracking progress together","It removes the need for deadlines","It replaces the need for communication"], correct:1,
+       explain:"A shared framework is what lets design, dev, and marketing coordinate without constant re-explaining."},
+      {q:"What's a \"retrospective\" used for?",
+       opts:["Planning the next quarter's budget","The team reflecting on what went well or poorly after a sprint, to improve how they work","A customer satisfaction survey","A performance review"], correct:1,
+       explain:"Retros are about continuous improvement of how the team works, not individual performance reviews."},
+      {q:"What's a \"standup\" (daily scrum) meant to achieve?",
+       opts:["A long weekly status report","A short, frequent sync on progress and blockers so issues surface early","A one-time kickoff meeting","A formal written document"], correct:1,
+       explain:"Standups are deliberately short and frequent — the goal is fast blocker-surfacing, not detailed reporting."}
+    ]
+  };
+
+  var BIGQUIZZES = {
+    baseline: {
+      title: "Baseline Knowledge Check",
+      blurb: "15 broad questions across the whole plan. Take this before you start anything — it's meant to show you where the real gaps are, not to be aced.",
+      questions: [
+        {q:"What does \"conversion rate\" measure in ecommerce?",
+         opts:["Number of visitors","The percentage of visitors who complete a desired action, like a purchase","The number of products in a catalogue","The average order value"], correct:1,
+         explain:"Conversion rate is completions divided by visitors — the core efficiency metric of a site."},
+        {q:"What's the main purpose of Google Analytics (GA4) for an ecommerce site?",
+         opts:["Hosting the website","Understanding how visitors find and use the site so you can make better decisions","Processing payments","Managing inventory"], correct:1,
+         explain:"GA4 is a measurement tool, not infrastructure — it informs decisions, it doesn't run the store."},
+        {q:"What does SEO primarily aim to improve?",
+         opts:["Paid ad spend efficiency only","A site's visibility in organic (unpaid) search results","Email deliverability","Checkout speed"], correct:1,
+         explain:"SEO is specifically about earning visibility in unpaid search results."},
+        {q:"In a Shopify store, what does \"SKU\" refer to?",
+         opts:["A shipping method","A unique identifier for a specific product variant","A type of discount code","A customer account type"], correct:1,
+         explain:"SKU (stock keeping unit) uniquely identifies a specific product/variant for inventory tracking."},
+        {q:"What's the difference between organic and paid traffic?",
+         opts:["There's no difference","Organic comes from unpaid sources like search or referrals; paid comes from ads you pay for","Paid traffic is always higher quality","Organic traffic requires a Google Ads account"], correct:1,
+         explain:"The split is entirely about whether you paid to bring the visitor to the site."},
+        {q:"What does \"average order value\" (AOV) tell a business?",
+         opts:["How many customers visited","The average amount spent per order","The shipping cost","The number of returns"], correct:1,
+         explain:"AOV is total revenue divided by number of orders."},
+        {q:"What's a common purpose of an email marketing platform like Klaviyo?",
+         opts:["Hosting product images","Automating and personalising email/SMS communication with customers","Processing tax","Managing staff schedules"], correct:1,
+         explain:"Klaviyo and similar tools exist to automate and personalise customer communication."},
+        {q:"What does \"CRO\" stand for in ecommerce?",
+         opts:["Customer Retention Overview","Conversion Rate Optimisation","Checkout Return Order","Content Reach Optimisation"], correct:1,
+         explain:"CRO is the practice of improving the percentage of visitors who take a desired action."},
+        {q:"What's the general difference between an Ecommerce Coordinator and an Ecommerce Manager?",
+         opts:["There is no real difference","A Coordinator typically executes day-to-day tasks, while a Manager typically owns strategy, budget/results, and often leads people","A Manager only does design work","A Coordinator earns more"], correct:1,
+         explain:"The shift is from execution to ownership — of outcomes, budget, and often people."},
+        {q:"What does \"churn\" refer to in a subscription or repeat-purchase context?",
+         opts:["The rate customers stop buying/subscribing over time","The number of new products launched","A type of discount","A shipping delay"], correct:0,
+         explain:"Churn measures customer loss over a period — a key retention metric."},
+        {q:"Why do businesses track customer lifetime value (LTV)?",
+         opts:["It's irrelevant to marketing decisions","To understand the total value a customer brings over time, which informs how much can be spent to acquire them","It only matters for accounting","It replaces the need for any other metric"], correct:1,
+         explain:"LTV directly informs how much you can reasonably spend to acquire a customer (CAC)."},
+        {q:"What's the purpose of A/B testing on a website?",
+         opts:["To randomly break the site for some users","To compare two versions of something and see which performs better based on data","To slow down page load intentionally","To test server security only"], correct:1,
+         explain:"A/B testing is a controlled comparison to make decisions based on evidence, not opinion."},
+        {q:"What does \"fulfilment\" refer to in ecommerce operations?",
+         opts:["Customer satisfaction surveys","The process of picking, packing, and shipping an order to the customer","Writing product descriptions","Running ad campaigns"], correct:1,
+         explain:"Fulfilment is the physical/logistical process of getting an order to the customer."},
+        {q:"What's a \"trade calendar\" typically used for in retail/ecommerce?",
+         opts:["Tracking employee holidays only","Planning key sales periods, promotions, and campaigns across the year","A tax filing schedule","A shipping carrier's timetable"], correct:1,
+         explain:"Trade calendars map out sale events and campaigns (e.g. EOFY, Black Friday) across the year."},
+        {q:"Why might a manager look at both revenue and margin, not just one or the other?",
+         opts:["Margin doesn't matter if revenue is high","High revenue with poor margin can still mean the business is losing money on that activity","Revenue and margin are always the same number","Only margin matters, never revenue"], correct:1,
+         explain:"Revenue tells you scale; margin tells you whether that scale is actually profitable."}
+      ]
+    },
+    midpoint: {
+      title: "Midpoint Check-in",
+      blurb: "15 more applied, scenario-style questions across the core stack — designed for once you've made a dent in GA4, Sheets, SEO, Ads, Meta, and CRO.",
+      questions: [
+        {q:"You want to know which channel drove the most purchases last month. Where would you look first?",
+         opts:["GA4 Acquisition/conversion reports by channel","The homepage banner","Your Shopify theme code","The shipping carrier's site"], correct:0,
+         explain:"Channel-level acquisition and conversion data lives in GA4's reporting, not the storefront itself."},
+        {q:"A product page has lots of traffic but a low add-to-cart rate. What's the most relevant next step?",
+         opts:["Immediately delete the product","Investigate with CRO thinking — pricing clarity, images, page speed, trust signals","Increase the price","Turn off all ads to that page"], correct:1,
+         explain:"High traffic with low add-to-cart is a classic CRO investigation, not a reason to pull the product."},
+        {q:"In Excel/Sheets, what would you use to quickly summarise 5,000 rows of order data by month and category?",
+         opts:["Manually retyping totals","A pivot table","Changing the font","Merging all cells into one"], correct:1,
+         explain:"Pivot tables exist exactly for this kind of fast summarisation."},
+        {q:"A Google Ads campaign has a high click-through rate but very high cost-per-click. What's worth checking first?",
+         opts:["Quality Score and keyword relevance/match types","The company logo","The office address","The number of email subscribers"], correct:0,
+         explain:"CPC is heavily influenced by Quality Score, which depends on relevance and expected performance."},
+        {q:"A Meta ad has run for 6 weeks and performance has steadily dropped. What's the most likely cause?",
+         opts:["Ad fatigue — the audience has seen it too many times","The product suddenly became worse","Meta Ads stopped working entirely","The currency changed"], correct:0,
+         explain:"Declining performance on unchanged creative over time is the textbook sign of ad fatigue."},
+        {q:"What's the correct order of a basic CRO process?",
+         opts:["Launch changes, then decide what to test","Identify a problem/opportunity, form a hypothesis, test it, analyse the result","Skip testing and just guess","Only test after the business closes"], correct:1,
+         explain:"CRO is a disciplined loop: identify, hypothesise, test, analyse — not random changes."},
+        {q:"You need a banner resized for both desktop and mobile without distorting the image. What's the right approach?",
+         opts:["Stretch the same image to fit both regardless of proportions","Crop/resize proportionally for each placement's dimensions","Use the same file size for both","Ignore mobile entirely"], correct:1,
+         explain:"Proportional resizing per placement avoids the stretched, distorted look."},
+        {q:"In GA4, rising engaged sessions alongside falling conversions most likely suggests what?",
+         opts:["Everything is working perfectly","People are engaging with content but something is blocking them from converting","GA4 is definitely broken","Traffic quality doesn't matter"], correct:1,
+         explain:"Engagement without conversion points to a blocker later in the journey — check checkout or pricing."},
+        {q:"What's the benefit of segmenting an email list before sending a Klaviyo campaign?",
+         opts:["None, everyone should get every email","More relevant messaging to each group, which typically improves engagement and reduces unsubscribes","It's required by law","It slows down sending"], correct:1,
+         explain:"Segmentation is what makes messaging feel relevant instead of generic."},
+        {q:"A keyword in Google Ads keeps triggering irrelevant searches. What should you add?",
+         opts:["A negative keyword","A new bidding strategy only","A new logo","A new landing page colour"], correct:0,
+         explain:"Negative keywords are the direct fix for irrelevant search matches."},
+        {q:"Why wait for statistical significance before declaring an A/B test winner?",
+         opts:["It's not necessary — go with your gut","Early results can be random noise, not a real difference","Statistical significance guarantees the change will work forever","It only matters for large companies"], correct:1,
+         explain:"Significance is about ruling out chance — early leads often reverse before a test finishes."},
+        {q:"What would you check in GA4 to see if mobile visitors convert worse than desktop visitors?",
+         opts:["There's no way to see this in GA4","Segment/breakdown reports by device category","The Photoshop file","The Google Ads billing page"], correct:1,
+         explain:"Device-category breakdowns are a standard GA4 comparison view."},
+        {q:"A pivot table summarises sales by category, but new orders keep landing in the source sheet. What keeps it accurate?",
+         opts:["Nothing, you must rebuild it every time","Refreshing the pivot table against the updated source data","Deleting the pivot table","Changing the currency symbol"], correct:1,
+         explain:"A quick refresh pulls in new rows without rebuilding the whole table."},
+        {q:"A social ad has strong engagement (likes/comments) but poor sales. What should you look at?",
+         opts:["Nothing, engagement is the only metric that matters","Whether the audience/targeting and landing page actually align with buying intent","Increasing the number of emojis in the copy","Cancelling all future marketing"], correct:1,
+         explain:"Engagement and purchase intent don't always correlate — check targeting and the landing experience."},
+        {q:"Which combination shows genuinely strong SEO performance, not just vanity numbers?",
+         opts:["High rankings for irrelevant keywords with no traffic","Rankings on relevant keywords that bring in traffic and lead to conversions","A high number of pages regardless of content quality","Fast load time with no organic traffic"], correct:1,
+         explain:"Relevant rankings that actually convert are the real signal — everything else is vanity."}
+      ]
+    },
+    final: {
+      title: "Final Capstone Quiz",
+      blurb: "20 harder, scenario-based questions covering the full stack plus Manager-track thinking — the closest thing here to a Manager-level interview warm-up.",
+      questions: [
+        {q:"You're asked to justify continuing a channel that's growing revenue but shrinking margin. What's the strongest argument to bring?",
+         opts:["Revenue growth alone justifies anything","A clear breakdown of unit economics (CAC, margin, LTV) showing whether the channel is sustainable long-term","\"Because I like it\"","Ignore the question entirely"], correct:1,
+         explain:"Unit economics is the language that actually answers a sustainability question — revenue alone doesn't."},
+        {q:"A junior team member keeps missing deadlines. What's the most constructive first step?",
+         opts:["Publicly call them out in a team meeting","A private, specific conversation about what's blocking them and how to support them","Immediately remove them from the project","Ignore it and hope it improves"], correct:1,
+         explain:"A private, specific conversation gets to the actual blocker instead of just applying pressure."},
+        {q:"What does Shopify Flow let a Plus merchant automate that standard Shopify can't easily do?",
+         opts:["Nothing different","Backend business logic, like automatically tagging high-value customers or triggering actions on events","Only the storefront theme","Payment processing itself"], correct:1,
+         explain:"Flow is specifically for automating backend logic and workflows."},
+        {q:"Deciding between more budget for retail media versus traditional search ads — what's the key question to ask first?",
+         opts:["Which one has a nicer-looking dashboard","Where is purchase intent highest for the incremental dollar spent, based on current performance data","Which one is newer technology","Neither matters, budget doesn't need justification"], correct:1,
+         explain:"Marginal return on the next dollar, grounded in data, is what should drive the allocation."},
+        {q:"Your team proposes using AI to auto-generate all product descriptions with no review step. What's the main risk?",
+         opts:["None, AI is always accurate","Inaccurate or generic descriptions reaching customers unchecked, which can mislead or under-inform them","It will be too slow","It's illegal in all cases"], correct:1,
+         explain:"Unreviewed AI output can reach customers with errors — the review step is the actual safeguard."},
+        {q:"What's a hallmark of good Agile-style project leadership across design, dev, and marketing?",
+         opts:["No planning, just start building","Clear backlog prioritisation and regular short syncs to catch blockers early","Only one person allowed to speak","Ignoring deadlines entirely"], correct:1,
+         explain:"Prioritisation plus frequent, short syncs is what keeps cross-functional work moving."},
+        {q:"A P&amp;L shows a category with high revenue but thin margin. What's a reasonable next step?",
+         opts:["Immediately discontinue it with no analysis","Investigate whether cost, pricing, or promotional spend can be adjusted, weighed against its strategic value","Ignore margin, revenue is all that matters","Increase ad spend on it without changing anything else"], correct:1,
+         explain:"The reasonable move is investigation and trade-off analysis, not a snap decision either way."},
+        {q:"What's the value of reporting results directly to senior stakeholders, from a career-growth perspective?",
+         opts:["None, it's just extra work","It builds visibility, communication skill, and evidence of ownership — all expected at Manager level","It replaces the need to actually deliver results","It's only relevant for finance roles"], correct:1,
+         explain:"Visibility and communication skill are exactly what Manager-level hiring looks for evidence of."},
+        {q:"Which is the better sign of real SEO performance improvement, not vanity metrics?",
+         opts:["More total pages indexed regardless of traffic","Increased organic traffic and conversions on commercially relevant keywords","A higher word count on every page","More backlinks from any source, regardless of relevance"], correct:1,
+         explain:"Relevant traffic that converts is the real outcome — the rest is noise."},
+        {q:"What's a practical way to build \"team leadership\" evidence before holding a formal management title?",
+         opts:["Wait until you're promoted to lead anything","Take ownership of a cross-functional project end-to-end and document the decisions and outcomes","Avoid taking any responsibility until asked","Only focus on individual tasks, never coordinate others"], correct:1,
+         explain:"Leadership evidence comes from doing it, not from the title arriving first."},
+        {q:"In a retail media context, what does \"purchase intent\" targeting mean?",
+         opts:["Targeting random users with no shopping context","Reaching people already in a buying mindset, e.g. actively searching or browsing for a product","Targeting only past customers","Ignoring targeting altogether"], correct:1,
+         explain:"Purchase-intent targeting is specifically about reaching people already in a shopping mindset."},
+        {q:"What's a strong reason to build a Looker Studio-style dashboard for leadership reporting instead of a weekly spreadsheet?",
+         opts:["It looks more impressive but adds no real value","It gives always-current, self-serve visibility without you manually rebuilding a report every time","It replaces the need to analyse the data","It's required by every company"], correct:1,
+         explain:"The real value is self-serve, always-current visibility — not the aesthetics."},
+        {q:"A Manager candidate can't yet cite years of formal people-management experience. What's the most credible alternative for an interview?",
+         opts:["Claim experience you don't have","Concrete examples of leading a project, mentoring, or managing a vendor/freelancer relationship","Avoid the topic entirely","Say it doesn't matter"], correct:1,
+         explain:"Concrete, real examples of informal leadership are far more credible than a claim with nothing behind it."},
+        {q:"What's the risk of ending a CRO test as soon as the numbers look good, ahead of your planned sample size?",
+         opts:["No risk, early results are always reliable","You may be reacting to random variation rather than a real, repeatable effect","It saves time with no downside","It's the recommended best practice"], correct:1,
+         explain:"Early stopping on a good-looking result is a classic way to act on noise instead of a real effect."},
+        {q:"Why does commercial acumen matter more at Manager level than Coordinator level?",
+         opts:["It doesn't — commercial acumen is irrelevant to ecommerce","Managers are typically accountable for whether their area is actually profitable, not just for executing tasks","Only the finance team should understand this","Coordinators need it more"], correct:1,
+         explain:"Accountability for profitability, not just execution, is a core part of the Manager-level shift."},
+        {q:"What's a sensible way to introduce AI-assisted demand forecasting into an existing manual process?",
+         opts:["Replace the manual process entirely overnight with no comparison","Run it alongside the existing process for a period, compare results, then decide how much to trust it","Never test it","Only use it for one-off decisions with no review"], correct:1,
+         explain:"Running in parallel and comparing is how you build trust in a new method without unnecessary risk."},
+        {q:"A Shopify Plus store wants unique gear-discount codes tied to each customer's purchase date, expiring automatically. What kind of approach does this generally need?",
+         opts:["A single shared code with no expiry logic","Some combination of tagging/automation, like Shopify Flow, to apply and remove eligibility over time","Manually emailing every customer individually forever","It's not possible on any Shopify plan"], correct:1,
+         explain:"Per-customer timing logic generally needs automation/tagging rather than a single static code."},
+        {q:"What's the danger of only ever measuring vanity metrics (likes, impressions, page views) at Manager level?",
+         opts:["There is no danger","It can mask whether activity is actually driving revenue, margin, or business outcomes that matter","Vanity metrics are the most important thing to report","Senior stakeholders only care about vanity metrics"], correct:1,
+         explain:"Vanity metrics can look great while the actual business outcome is flat or negative."},
+        {q:"What's the most defensible way to decide between two competing marketing channels with limited budget?",
+         opts:["Whichever channel manager argues loudest","Compare performance data — cost, conversion, margin-adjusted return — for each, and allocate based on that","Flip a coin","Always split the budget exactly 50/50 regardless of performance"], correct:1,
+         explain:"Data-based comparison is defensible in a way that opinion or arbitrary splits aren't."},
+        {q:"Overall, what best summarises the shift in mindset from Coordinator to Manager?",
+         opts:["Doing more of the same tasks, faster","Moving from executing tasks to owning outcomes — results, people, and commercial decisions","No real shift, titles don't matter","Working fewer hours"], correct:1,
+         explain:"The shift is fundamentally about ownership of outcomes, not just doing more of the same work."}
+      ]
+    }
+  };
+
+  var state = { courses:{}, cases:{a:{},b:{},c:{}}, quizzes:{}, milestones:{}, activity:{}, lastVisionShown:null, targetDate:null, applications:[] };
+
+  function defaultState(){
+    var s = { courses:{}, cases:{a:{},b:{},c:{}}, quizzes:{}, milestones:{}, activity:{}, lastVisionShown:null, targetDate:null,
+      applications:[ { id:"seed1", company:"DBG Health & Beauty (VidaCorp)", role:"eCommerce & CRM Specialist", date:"", status:"Applied", notes:"" } ] };
+    COURSES.forEach(function(c){ s.courses[c.id] = c.def || "not_started"; });
+    return s;
+  }
+
+  function cycle(status){
+    if(status === "not_started") return "in_progress";
+    if(status === "in_progress") return "done";
+    return "not_started";
+  }
+  function label(status){
+    if(status === "in_progress") return "In progress";
+    if(status === "done") return "Done";
+    return "Not started";
+  }
+
+  async function load(){
+    state = defaultState();
+    try{
+      var res = await storageBackend.get(STORAGE_KEY);
+      if(res && res.value){
+        var saved = JSON.parse(res.value);
+        if(saved.courses){ for(var k in saved.courses){ state.courses[k] = saved.courses[k]; } }
+        if(saved.cases){ state.cases = saved.cases; }
+        if(saved.quizzes){ state.quizzes = saved.quizzes; }
+        if(saved.milestones){ state.milestones = saved.milestones; }
+        if(saved.activity){ state.activity = saved.activity; }
+        if(saved.lastVisionShown){ state.lastVisionShown = saved.lastVisionShown; }
+        if(saved.targetDate){ state.targetDate = saved.targetDate; }
+        if(saved.applications){ state.applications = saved.applications; }
+      }
+    }catch(e){ /* no saved state yet */ }
+    recordActivity();
+    render();
+  }
+
+  var saveTimer = null;
+  var saveInProgress = false;
+  var saveQueued = false;
+
+  function save(){
+    if(saveTimer) clearTimeout(saveTimer);
+    saveTimer = setTimeout(flushSave, 500);
+  }
+
+  function wait(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+
+  async function flushSave(){
+    if(saveInProgress){ saveQueued = true; return; }
+    saveInProgress = true;
+    var snapshot = JSON.stringify(state);
+    var maxAttempts = HAS_ARTIFACT_STORAGE ? 2 : 1;
+    var ok = false;
+    for(var attempt = 0; attempt < maxAttempts && !ok; attempt++){
+      try{
+        await storageBackend.set(STORAGE_KEY, snapshot);
+        ok = true;
+      }catch(e){
+        if(attempt < maxAttempts - 1){ await wait(400); }
+        else { console.error("save failed", e); }
+      }
+    }
+    saveInProgress = false;
+    if(saveQueued){
+      saveQueued = false;
+      flushSave();
+    }
+  }
+
+  function quizScoreLabel(id){
+    var q = state.quizzes[id];
+    if(!q || typeof q.best !== "number") return {text:"Quiz not taken", passed:false};
+    var total = (QUIZZES[id] || []).length;
+    return {text:"Best: " + q.best + "/" + total, passed: q.best === total};
+  }
+
+  function renderCourses(){
+    var groups = ["Core stack", "Stretch", "Manager track"];
+    var html = "";
+    groups.forEach(function(g){
+      html += '<div class="group-label">' + g + '</div>';
+      COURSES.filter(function(c){ return c.group === g; }).forEach(function(c){
+        var status = state.courses[c.id] || "not_started";
+        var hasQuiz = QUIZZES[c.id] && QUIZZES[c.id].length;
+        var scoreInfo = quizScoreLabel(c.id);
+        html += '<div class="course">' +
+          '<div class="course-main">' +
+            '<p class="course-title">' + c.title + '</p>' +
+            '<p class="course-provider">' + c.provider + ' &middot; Priority: ' + c.priority + ' &middot; ~' + c.estHours + ' hrs</p>' +
+            '<p class="course-why">' + c.why + '</p>' +
+            '<p class="course-learn"><b>You will learn: </b>' + c.learn + '</p>' +
+            (hasQuiz ?
+              '<div class="quiz-row"><button class="quiz-btn" data-quiz-id="' + c.id + '">Take quiz</button>' +
+              '<span class="quiz-score' + (scoreInfo.passed ? ' passed' : '') + '">' + scoreInfo.text + '</span></div>'
+              : '') +
+          '</div>' +
+          '<button class="status-btn" data-id="' + c.id + '" data-status="' + status + '">' + label(status) + '</button>' +
+        '</div>';
+      });
+    });
+    document.getElementById("courseList").innerHTML = html;
+
+    document.querySelectorAll(".status-btn").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var id = btn.getAttribute("data-id");
+        state.courses[id] = cycle(state.courses[id] || "not_started");
+        renderCourses();
+        renderRing();
+        save();
+      });
+    });
+
+    document.querySelectorAll(".quiz-btn").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        openQuiz("course", btn.getAttribute("data-quiz-id"));
+      });
+    });
+  }
+
+  function renderRing(){
+    var total = COURSES.length;
+    var done = 0;
+    COURSES.forEach(function(c){ if(state.courses[c.id] === "done") done++; });
+    var pct = total ? Math.round((done/total)*100) : 0;
+    var circumference = 119;
+    var offset = circumference - (pct/100)*circumference;
+    document.getElementById("ringProgress").style.strokeDashoffset = offset;
+    document.getElementById("ringNum").textContent = pct + "%";
+
+    var totalHours = 0, doneHours = 0;
+    COURSES.forEach(function(c){
+      totalHours += c.estHours;
+      if(state.courses[c.id] === "done") doneHours += c.estHours;
+    });
+    var hoursPct = totalHours ? (doneHours/totalHours)*100 : 0;
+    document.getElementById("hoursFill").style.width = hoursPct + "%";
+    document.getElementById("hoursNum").textContent = doneHours + " / " + totalHours + " hrs";
+  }
+
+  function lowerFirst(s){ return s ? s.charAt(0).toLowerCase() + s.slice(1) : s; }
+
+  function updateDerived(caseEl, key){
+    var c = state.cases[key] || {};
+    var sit = (c.situation || "").trim();
+    var act = (c.action || "").trim();
+    var out = (c.outcome || "").trim();
+    var bulletEl = caseEl.querySelector('[data-derived="bullet"]');
+    var starEl = caseEl.querySelector('[data-derived="star"]');
+
+    if(!sit && !act && !out){
+      bulletEl.textContent = "Fill in the fields above to generate a draft.";
+      starEl.textContent = "Fill in the fields above to generate a draft.";
+      return;
+    }
+    var bullet = act || "Delivered the work described above";
+    if(out) bullet += ", resulting in " + lowerFirst(out);
+    if(!/[.!?]$/.test(bullet)) bullet += ".";
+    bulletEl.textContent = bullet;
+
+    var starParts = [];
+    if(sit) starParts.push(sit);
+    if(act) starParts.push(act);
+    if(out) starParts.push(out);
+    starEl.textContent = starParts.join(" ");
+  }
+
+  function flashCopied(btn){
+    var original = btn.textContent;
+    btn.textContent = "Copied!";
+    btn.classList.add("copied");
+    setTimeout(function(){ btn.textContent = original; btn.classList.remove("copied"); }, 1500);
+  }
+
+  async function copyToClipboard(text, btn){
+    try{
+      await navigator.clipboard.writeText(text);
+      flashCopied(btn);
+      return;
+    }catch(e){ /* fall through to legacy method */ }
+    try{
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      flashCopied(btn);
+    }catch(e2){
+      btn.textContent = "Select text to copy";
+    }
+  }
+
+  function renderCases(){
+    document.querySelectorAll(".case").forEach(function(caseEl){
+      var key = caseEl.getAttribute("data-case");
+      caseEl.querySelectorAll("textarea").forEach(function(ta){
+        var field = ta.getAttribute("data-field");
+        ta.value = (state.cases[key] && state.cases[key][field]) || "";
+        ta.addEventListener("change", function(){
+          if(!state.cases[key]) state.cases[key] = {};
+          state.cases[key][field] = ta.value;
+          save();
+          updateDerived(caseEl, key);
+          var hint = document.getElementById("saveHint");
+          hint.textContent = "Saved.";
+          setTimeout(function(){ hint.textContent = "\u00A0"; }, 1500);
+        });
+      });
+      updateDerived(caseEl, key);
+      caseEl.querySelectorAll(".copy-btn").forEach(function(btn){
+        btn.addEventListener("click", function(){
+          var target = btn.getAttribute("data-copy-target");
+          var text = caseEl.querySelector('[data-derived="' + target + '"]').textContent;
+          copyToClipboard(text, btn);
+        });
+      });
+    });
+  }
+
+  function render(){
+    renderCourses();
+    renderRing();
+    renderCases();
+    renderMilestones();
+    renderToday();
+    renderApplications();
+  }
+
+  document.querySelectorAll(".tab-btn").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      document.querySelectorAll(".tab-btn").forEach(function(b){ b.classList.remove("active"); });
+      document.querySelectorAll(".panel").forEach(function(p){ p.classList.remove("active"); });
+      btn.classList.add("active");
+      document.getElementById("panel-" + btn.getAttribute("data-tab")).classList.add("active");
+    });
+  });
+
+  document.getElementById("resetBtn").addEventListener("click", function(){
+    if(confirm("Reset all course progress back to Not started?")){
+      state.courses = defaultState().courses;
+      renderCourses();
+      renderRing();
+      save();
+    }
+  });
+
+  // ---- Quiz modal (handles both course quizzes and milestone quizzes) ----
+  var quizState = { kind:null, id:null, questions:null, answers:[], checked:false };
+
+  function getQuizQuestions(kind, id){
+    return kind === "course" ? QUIZZES[id] : BIGQUIZZES[id].questions;
+  }
+  function getQuizTitle(kind, id){
+    if(kind === "course"){
+      var c = COURSES.filter(function(x){ return x.id === id; })[0];
+      return "Quiz: " + (c ? c.title : "");
+    }
+    return BIGQUIZZES[id].title;
+  }
+
+  function openQuiz(kind, id){
+    var questions = getQuizQuestions(kind, id);
+    if(!questions) return;
+    quizState = { kind: kind, id: id, questions: questions, answers: new Array(questions.length).fill(null), checked:false };
+
+    document.getElementById("quizModalTitle").textContent = getQuizTitle(kind, id);
+    document.getElementById("quizResultText").textContent = "\u00A0";
+    document.getElementById("quizCheckBtn").style.display = "inline-block";
+    document.getElementById("quizRetakeBtn").style.display = "none";
+    renderQuizBody();
+    document.getElementById("quizOverlay").classList.add("open");
+    document.getElementById("quizOverlay").scrollTop = 0;
+  }
+
+  function renderQuizBody(){
+    var questions = quizState.questions;
+    var html = "";
+    questions.forEach(function(q, qi){
+      html += '<div class="quiz-q" data-qi="' + qi + '">' +
+        '<p class="quiz-q-text">' + (qi+1) + '. ' + q.q + '</p>';
+      q.opts.forEach(function(opt, oi){
+        html += '<button class="quiz-opt" data-qi="' + qi + '" data-oi="' + oi + '">' + opt + '</button>';
+      });
+      html += '<p class="quiz-explain" id="explain-' + qi + '">' + q.explain + '</p>' +
+      '</div>';
+    });
+    document.getElementById("quizModalBody").innerHTML = html;
+
+    document.querySelectorAll(".quiz-opt").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        if(quizState.checked) return;
+        var qi = parseInt(btn.getAttribute("data-qi"), 10);
+        var oi = parseInt(btn.getAttribute("data-oi"), 10);
+        quizState.answers[qi] = oi;
+        document.querySelectorAll('.quiz-opt[data-qi="' + qi + '"]').forEach(function(b){
+          b.classList.remove("selected");
+        });
+        btn.classList.add("selected");
+      });
+    });
+  }
+
+  function checkQuiz(){
+    var questions = quizState.questions;
+    var score = 0;
+    questions.forEach(function(q, qi){
+      var chosen = quizState.answers[qi];
+      if(chosen === q.correct) score++;
+      document.querySelectorAll('.quiz-opt[data-qi="' + qi + '"]').forEach(function(b){
+        var oi = parseInt(b.getAttribute("data-oi"), 10);
+        b.setAttribute("disabled", "true");
+        if(oi === q.correct) b.classList.add("correct");
+        else if(oi === chosen) b.classList.add("incorrect");
+      });
+      document.getElementById("explain-" + qi).classList.add("show");
+    });
+    quizState.checked = true;
+    document.getElementById("quizResultText").textContent = score + " / " + questions.length + " correct";
+    document.getElementById("quizCheckBtn").style.display = "none";
+    document.getElementById("quizRetakeBtn").style.display = "inline-block";
+
+    if(quizState.kind === "course"){
+      var prevBest = (state.quizzes[quizState.id] && state.quizzes[quizState.id].best) || 0;
+      if(score > prevBest){
+        state.quizzes[quizState.id] = { best: score };
+        save();
+      }
+      renderCourses();
+    } else {
+      var prevM = state.milestones[quizState.id];
+      var prevBestM = (prevM && prevM.best) || 0;
+      if(score > prevBestM){
+        state.milestones[quizState.id] = { best: score, total: questions.length, date: todayStr() };
+        save();
+      }
+      renderMilestones();
+    }
+  }
+
+  document.getElementById("quizCheckBtn").addEventListener("click", function(){
+    var answeredAll = quizState.answers.every(function(a){ return a !== null; });
+    if(!answeredAll){
+      document.getElementById("quizResultText").textContent = "Answer every question first";
+      return;
+    }
+    checkQuiz();
+  });
+
+  document.getElementById("quizRetakeBtn").addEventListener("click", function(){
+    openQuiz(quizState.kind, quizState.id);
+  });
+
+  document.getElementById("quizCloseBtn").addEventListener("click", function(){
+    document.getElementById("quizOverlay").classList.remove("open");
+  });
+  document.getElementById("quizOverlay").addEventListener("click", function(e){
+    if(e.target.id === "quizOverlay") e.currentTarget.classList.remove("open");
+  });
+
+  // ---- Milestones tab ----
+  function renderMilestones(){
+    var order = ["baseline", "midpoint", "final"];
+    var html = "";
+    order.forEach(function(id){
+      var m = BIGQUIZZES[id];
+      var result = state.milestones[id];
+      var scoreText = result ? ("Best: " + result.best + "/" + result.total + " \u00b7 " + result.date) : "Not taken yet";
+      html += '<div class="milestone-card">' +
+        '<h3>' + m.title + '</h3>' +
+        '<p class="m-blurb">' + m.blurb + '</p>' +
+        '<div class="m-foot">' +
+          '<span class="m-score' + (result ? ' taken' : '') + '">' + scoreText + '</span>' +
+          '<button class="milestone-btn" data-milestone-id="' + id + '">' + (result ? "Retake" : "Start quiz") + '</button>' +
+        '</div>' +
+      '</div>';
+    });
+
+    var b = state.milestones.baseline, mid = state.milestones.midpoint, f = state.milestones.final;
+    html += '<div class="growth-strip">Growth: ' +
+      '<b>' + (b ? (Math.round(b.best/b.total*100) + "%") : "\u2014") + '</b> baseline &rarr; ' +
+      '<b>' + (mid ? (Math.round(mid.best/mid.total*100) + "%") : "\u2014") + '</b> midpoint &rarr; ' +
+      '<b>' + (f ? (Math.round(f.best/f.total*100) + "%") : "\u2014") + '</b> final' +
+    '</div>';
+
+    document.getElementById("milestoneList").innerHTML = html;
+    document.querySelectorAll(".milestone-btn").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        openQuiz("milestone", btn.getAttribute("data-milestone-id"));
+      });
+    });
+  }
+
+  // ---- Job application tracker ----
+  function escapeAttr(s){
+    return String(s || "").replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  }
+
+  var STATUS_OPTIONS = ["Applied","Interviewing","Offer","Rejected","Withdrawn"];
+
+  function renderApplications(){
+    var apps = state.applications || [];
+    var counts = {};
+    apps.forEach(function(a){ counts[a.status] = (counts[a.status]||0) + 1; });
+    var parts = [];
+    STATUS_OPTIONS.forEach(function(s){
+      if(counts[s]) parts.push("<b>" + counts[s] + "</b> " + s.toLowerCase());
+    });
+    document.getElementById("appSummary").innerHTML = parts.length ? parts.join(" &middot; ") : "No applications tracked yet.";
+
+    var html = "";
+    apps.forEach(function(app){
+      html += '<div class="app-card">' +
+        '<button class="app-del" data-app-id="' + app.id + '" title="Remove">&times;</button>' +
+        '<div class="app-row">' +
+          '<div class="app-field"><label>Company</label><input type="text" data-field="company" data-app-id="' + app.id + '" value="' + escapeAttr(app.company) + '" placeholder="Company"></div>' +
+          '<div class="app-field"><label>Role</label><input type="text" data-field="role" data-app-id="' + app.id + '" value="' + escapeAttr(app.role) + '" placeholder="Role"></div>' +
+        '</div>' +
+        '<div class="app-row">' +
+          '<div class="app-field"><label>Date applied</label><input type="date" data-field="date" data-app-id="' + app.id + '" value="' + escapeAttr(app.date) + '"></div>' +
+          '<div class="app-field"><label>Status</label><select class="status-select" data-field="status" data-app-id="' + app.id + '" data-status="' + app.status + '">' +
+            STATUS_OPTIONS.map(function(s){ return '<option value="' + s + '"' + (s === app.status ? " selected" : "") + '>' + s + '</option>'; }).join("") +
+          '</select></div>' +
+        '</div>' +
+        '<div class="app-row">' +
+          '<div class="app-field" style="flex-basis:100%;"><label>Notes</label><textarea data-field="notes" data-app-id="' + app.id + '" placeholder="Interview dates, contacts, follow-ups...">' + escapeAttr(app.notes) + '</textarea></div>' +
+        '</div>' +
+      '</div>';
+    });
+    document.getElementById("appList").innerHTML = html || '<p style="font-size:13px;color:var(--text-dim);">No applications yet \u2014 add one below.</p>';
+
+    document.querySelectorAll("#appList input, #appList select, #appList textarea").forEach(function(el){
+      el.addEventListener("change", function(){
+        var id = el.getAttribute("data-app-id");
+        var field = el.getAttribute("data-field");
+        var app = state.applications.filter(function(a){ return a.id === id; })[0];
+        if(!app) return;
+        app[field] = el.value;
+        save();
+        if(field === "status"){
+          el.setAttribute("data-status", el.value);
+          renderApplications();
+        }
+      });
+    });
+
+    document.querySelectorAll(".app-del").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var id = btn.getAttribute("data-app-id");
+        if(confirm("Remove this application?")){
+          state.applications = state.applications.filter(function(a){ return a.id !== id; });
+          save();
+          renderApplications();
+        }
+      });
+    });
+  }
+
+  document.getElementById("addAppBtn").addEventListener("click", function(){
+    state.applications.push({ id: "app" + Date.now(), company:"", role:"", date:"", status:"Applied", notes:"" });
+    save();
+    renderApplications();
+  });
+
+  document.getElementById("targetDateInput").addEventListener("change", function(){
+    if(!this.value){
+      state.targetDate = null;
+      renderToday();
+      return;
+    }
+    state.targetDate = this.value;
+    save();
+    renderCountdown();
+  });
+
+  // ---- Manual backup / restore (fallback if automatic storage is unreliable) ----
+  document.getElementById("backupCopyBtn").addEventListener("click", function(){
+    copyToClipboard(JSON.stringify(state), document.getElementById("backupCopyBtn"));
+  });
+
+  document.getElementById("backupRestoreBtn").addEventListener("click", function(){
+    var raw = document.getElementById("backupPasteArea").value.trim();
+    if(!raw){ return; }
+    var parsed;
+    try{
+      parsed = JSON.parse(raw);
+    }catch(e){
+      alert("That doesn't look like a valid backup \u2014 couldn't read it.");
+      return;
+    }
+    if(!confirm("This replaces everything currently on screen with the pasted backup. Continue?")) return;
+    var merged = defaultState();
+    for(var k in parsed){ merged[k] = parsed[k]; }
+    state = merged;
+    render();
+    save();
+    document.getElementById("backupPasteArea").value = "";
+  });
+
+  // ---- Today tab: streaks, heatmap, daily tip, next action ----
+  var TIPS = [
+    "Small consistent effort beats occasional bursts. Fifteen minutes today counts.",
+    "You don't need to feel motivated to start \u2014 starting is what creates motivation.",
+    "Every course you finish is one fewer excuse a hiring manager has to say no.",
+    "Progress isn't linear. A slow week doesn't erase the ones before it.",
+    "The Coordinator title is the door. The Manager title is what you build after you're through it.",
+    "Nobody remembers the day you started. They remember the day you didn't quit.",
+    "A half-finished course still taught you something. Go finish it.",
+    "You're not behind. You're exactly as far along as someone who started when you did.",
+    "Case studies win interviews. Certificates just get you in the room.",
+    "The market doesn't care how you feel today. Show up anyway.",
+    "One quiz question wrong is one gap found before an interviewer finds it.",
+    "You've already got real Shopify experience most candidates don't. Stack skills on top of that.",
+    "Nobody becomes a Manager by accident. Decide it, then do the boring parts daily.",
+    "Ten minutes of Excel practice today is worth more than an hour of scrolling job boards.",
+    "The version of you applying for Manager roles in a year is built from today's small session.",
+    "Discipline is just doing it on the days you don't feel like it.",
+    "You don't have to finish the whole roadmap today. Just don't finish nothing.",
+    "Every skill on this list is something someone less capable than you already has. Catch up, then pass them.",
+    "Streaks aren't the goal. They're just proof you kept showing up.",
+    "A rough draft of a case study beats a perfect one that never gets written.",
+    "The gap between Coordinator and Manager is mostly reps, not talent.",
+    "You're allowed to go slow. You're not allowed to stop.",
+    "Today's ten minutes compounds. Skip it and it just delays the offer.",
+    "If today's a bad day, do the smallest possible thing and call it a win.",
+    "Nobody's checking on you. That's exactly why this matters \u2014 it only happens if you make it happen."
+  ];
+
+  function todayStr(){
+    var d = new Date();
+    return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
+  }
+  function dateFromOffset(offsetDays){
+    var d = new Date();
+    d.setDate(d.getDate() - offsetDays);
+    return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
+  }
+  function dayOfYear(){
+    var d = new Date();
+    var start = new Date(d.getFullYear(), 0, 0);
+    var diff = d - start;
+    return Math.floor(diff / (1000*60*60*24));
+  }
+
+  function recordActivity(){
+    var t = todayStr();
+    if(!state.activity[t]){
+      state.activity[t] = true;
+      save();
+    }
+  }
+
+  function computeStreaks(){
+    var current = 0;
+    var i = 0;
+    while(state.activity[dateFromOffset(i)]){ current++; i++; }
+
+    var allDates = Object.keys(state.activity).sort();
+    var best = 0, run = 0, prevTime = null;
+    allDates.forEach(function(ds){
+      var t = new Date(ds).getTime();
+      if(prevTime !== null && (t - prevTime) === 86400000){ run++; } else { run = 1; }
+      if(run > best) best = run;
+      prevTime = t;
+    });
+    return { current: current, best: Math.max(best, current), total: allDates.length };
+  }
+
+  function renderCountdown(){
+    var totalHours = 0, doneHours = 0;
+    COURSES.forEach(function(c){ totalHours += c.estHours; if(state.courses[c.id] === "done") doneHours += c.estHours; });
+    var hoursRemaining = totalHours - doneHours;
+
+    var target = new Date(state.targetDate + "T00:00:00");
+    var now = new Date();
+    now.setHours(0,0,0,0);
+    var daysLeft = Math.round((target - now) / 86400000);
+
+    var countdownEl = document.getElementById("targetCountdown");
+    var paceEl = document.getElementById("targetPace");
+
+    if(daysLeft < 0){
+      countdownEl.textContent = "Target date passed";
+      paceEl.textContent = hoursRemaining > 0 ? (hoursRemaining + " hrs of learning still remaining \u2014 worth setting a new date.") : "All learning hours complete.";
+      return;
+    }
+    countdownEl.textContent = daysLeft === 0 ? "Today" : (daysLeft + " day" + (daysLeft === 1 ? "" : "s") + " left");
+
+    if(hoursRemaining <= 0){
+      paceEl.textContent = "All learning hours already done \u2014 nice work.";
+      return;
+    }
+    var weeksLeft = Math.max(daysLeft / 7, 0.5);
+    var hrsPerWeek = hoursRemaining / weeksLeft;
+    paceEl.textContent = hoursRemaining + " hrs of learning left \u00b7 about " + hrsPerWeek.toFixed(1) + " hrs/week to hit it";
+  }
+
+  function renderToday(){
+    if(!state.targetDate){
+      var d = new Date();
+      d.setDate(d.getDate() + 90);
+      state.targetDate = d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
+      save();
+    }
+    document.getElementById("targetDateInput").value = state.targetDate;
+    renderCountdown();
+
+    var s = computeStreaks();
+    document.getElementById("streakCurrent").textContent = s.current;
+    document.getElementById("streakBest").textContent = s.best;
+    document.getElementById("streakTotal").textContent = s.total;
+
+    var grid = "";
+    for(var i = 27; i >= 0; i--){
+      var ds = dateFromOffset(i);
+      var active = !!state.activity[ds];
+      var isToday = i === 0;
+      grid += '<div class="heatmap-cell' + (active ? ' active' : '') + (isToday ? ' today' : '') + '" title="' + ds + '"></div>';
+    }
+    document.getElementById("heatmapGrid").innerHTML = grid;
+
+    document.getElementById("dailyTip").textContent = TIPS[dayOfYear() % TIPS.length];
+
+    var order = ["Core stack", "Manager track", "Stretch"];
+    var next = null;
+    order.forEach(function(g){
+      if(next) return;
+      var candidates = COURSES.filter(function(c){ return c.group === g && (state.courses[c.id] || "not_started") !== "done"; });
+      if(candidates.length) next = candidates[0];
+    });
+
+    if(next){
+      document.getElementById("naTitle").textContent = next.title;
+      document.getElementById("naMeta").textContent = next.provider + " \u00b7 ~" + next.estHours + " hrs \u00b7 " + label(state.courses[next.id] || "not_started");
+      document.getElementById("naBtn").textContent = "Go to Learning";
+      document.getElementById("naBtn").onclick = function(){
+        document.querySelector('.tab-btn[data-tab="learning"]').click();
+      };
+    } else {
+      document.getElementById("naTitle").textContent = "Every course marked done";
+      document.getElementById("naMeta").textContent = "Take the Final Capstone Quiz if you haven't yet.";
+      document.getElementById("naBtn").textContent = "Go to Milestones";
+      document.getElementById("naBtn").onclick = function(){
+        document.querySelector('.tab-btn[data-tab="milestones"]').click();
+      };
+    }
+  }
+
+  // ---- Vision/payoff popup: once per day ----
+  document.getElementById("visionRevealBtn").addEventListener("click", function(){
+    document.getElementById("visionTeaser").style.display = "none";
+    document.getElementById("visionRevealed").style.display = "block";
+  });
+  document.getElementById("visionCloseBtn").addEventListener("click", function(){
+    document.getElementById("visionOverlay").classList.remove("open");
+  });
+  document.getElementById("visionOverlay").addEventListener("click", function(e){
+    if(e.target.id === "visionOverlay") e.currentTarget.classList.remove("open");
+  });
+
+  function maybeShowVision(){
+    var t = todayStr();
+    if(state.lastVisionShown !== t){
+      document.getElementById("visionTeaser").style.display = "block";
+      document.getElementById("visionRevealed").style.display = "none";
+      document.getElementById("visionOverlay").classList.add("open");
+      state.lastVisionShown = t;
+      save();
+    }
+  }
+
+  load().then(function(){
+    maybeShowVision();
+  });
+})();
+</script>
+</body>
+</html>
