@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
 <title>Ecommerce Career Plan</title>
 <style>
@@ -652,7 +653,7 @@ textarea::placeholder{color:#5c6470;}
     {id:"klaviyo", group:"Core stack", priority:"Done", title:"Klaviyo Practitioner Certificate", provider:"Klaviyo Academy",
       why:"Named explicitly in multiple current listings (Muscle Mat, Jivaro) as a required skill.",
       learn:"How to build and segment audiences, design automated flows, and read email/SMS performance metrics.", estHours:6, def:"done"},
-    {id:"crm", group:"Core stack", priority:"Med-High", title:"CRM &amp; Marketing Automation Fundamentals", provider:"Salesforce Trailhead (free)",
+    {id:"crm", group:"Core stack", priority:"Med-High", title:"CRM & Marketing Automation Fundamentals", provider:"Salesforce Trailhead (free)",
       why:"Directly named in listings like a Senior CRM Specialist role you're looking at — segmentation, personalisation, and multi-channel journey orchestration on an enterprise CRM platform, a level Klaviyo doesn't fully cover.",
       learn:"Customer data management, campaign/journey building, and segmentation on the platform most enterprise CRM roles are actually built on \u2014 the concepts transfer even when a listing names Adobe or Salesforce Marketing Cloud instead.", estHours:6},
     {id:"ga4", group:"Core stack", priority:"High", title:"Google Analytics / GA4 Certification", provider:"Google Skillshop",
@@ -682,7 +683,7 @@ textarea::placeholder{color:#5c6470;}
     {id:"social", group:"Core stack", priority:"Med-High", title:"Social Media Marketing Fundamentals", provider:"HubSpot Academy (Social Media Marketing Certification)",
       why:"A gap you flagged yourself \u2014 and several listings reviewed (OPPO, Vorsen) pair Shopify ops with organic social content, not just paid ads like Meta Blueprint covers.",
       learn:"Building a content strategy, platform-specific posting approaches, social listening, and measuring what's actually working \u2014 the organic side that paid-ads training doesn't touch.", estHours:5},
-    {id:"photography", group:"Core stack", priority:"Med-High", title:"Product &amp; Social Media Photography", provider:"Alison (free, CPD-certified)",
+    {id:"photography", group:"Core stack", priority:"Med-High", title:"Product & Social Media Photography", provider:"Alison (free, CPD-certified)",
       why:"Closes the imagery half of the same gap \u2014 this is the capture side (lighting, composition, styling), where the Photoshop course is only the polish side.",
       learn:"Lighting, composition, and styling for product and lifestyle shots that actually convert \u2014 including what a modern phone camera can do without a DSLR.", estHours:4},
 
@@ -702,7 +703,7 @@ textarea::placeholder{color:#5c6470;}
     {id:"shopifyplus", group:"Manager track", priority:"Med", title:"Shopify Plus fundamentals (Flow, Scripts, B2B)", provider:"Shopify Partner Academy",
       why:"Most Ecommerce Manager listings assume Shopify Plus, not standard Shopify.",
       learn:"Shopify Flow for automation, Scripts for checkout customisation, and the B2B/wholesale features standard Shopify lacks.", estHours:5},
-    {id:"aiauto", group:"Manager track", priority:"Med", title:"AI &amp; automation literacy for ecommerce", provider:"Coursera / vendor academies (Shopify Magic, Klaviyo AI)",
+    {id:"aiauto", group:"Manager track", priority:"Med", title:"AI & automation literacy for ecommerce", provider:"Coursera / vendor academies (Shopify Magic, Klaviyo AI)",
       why:"2026 market data shows AI fluency now carries a real salary premium and is increasingly assumed at Manager level.",
       learn:"Where AI genuinely helps — product copy, personalisation, demand forecasting — and where it adds risk instead of saving time.", estHours:5},
     {id:"retailmedia", group:"Manager track", priority:"Med-Low", title:"Retail media / marketplace ads basics", provider:"Amazon Ads Academy (free)",
@@ -1903,6 +1904,24 @@ textarea::placeholder{color:#5c6470;}
       save();
     }
   }
+
+  var currentDay = todayStr();
+
+  function checkDayRollover(){
+    var d = todayStr();
+    if(d !== currentDay){
+      currentDay = d;
+      recordActivity();
+      renderToday();
+      maybeShowVision();
+    }
+  }
+
+  document.addEventListener("visibilitychange", function(){
+    if(!document.hidden) checkDayRollover();
+  });
+  window.addEventListener("focus", checkDayRollover);
+  setInterval(checkDayRollover, 5 * 60 * 1000);
 
   load().then(function(){
     maybeShowVision();
